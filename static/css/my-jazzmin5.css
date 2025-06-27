@@ -1,0 +1,233 @@
+:root {
+  --sidebar-bg: #000000c9;
+  --sidebar-text: #eee4ff;
+  --sidebar-hover: #7c3aed;
+  --main-bg: #a9aae7;
+  --card-bg: #ffffff;
+  --primary-purple: #7c3aed;
+  --primary-hover: #5b21b6;
+  --border-radius: 10px;
+  --transition-speed: 0.3s;
+  --text-color: #1f2937;
+  --light-gray: #f3f4f6;
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--main-bg);
+  color: var(--text-color);
+}
+
+/* SIDEBAR */
+.main-sidebar {
+  background-color: var(--sidebar-bg);
+  color: var(--sidebar-text);
+}
+
+.brand-link {
+  background-color: var(--sidebar-bg);
+  padding: 1rem;
+  font-weight: bold;
+  color: var(--sidebar-text);
+}
+
+.nav-sidebar .nav-link {
+  color: var(--sidebar-text);
+  transition: all 0.3s ease;
+}
+
+.nav-sidebar .nav-link:hover {
+  background-color: var(--primary-purple);
+  color: white;
+}
+
+.nav-sidebar .nav-link:hover i,
+.nav-sidebar .nav-link:hover p {
+  color: white;
+}
+
+/* HEADER */
+.main-header {
+  background-color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+#site-name {
+  color: var(--primary-purple);
+  font-weight: 700;
+}
+
+/* NAVBAR */
+.navbar-nav .nav-link {
+  color: var(--text-color);
+  border-radius: 6px;
+}
+
+.navbar-nav .nav-link:hover {
+  background-color: #ede9fe;
+  color: var(--primary-hover);
+}
+
+/* CARDS */
+.card {
+  background-color: var(--card-bg);
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}
+
+.card-header {
+  background-color: var(--light-gray);
+  font-weight: 600;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background-color: var(--primary-purple);
+  border: none;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.btn-outline-primary {
+  color: var(--primary-purple);
+  border: 1px solid var(--primary-purple);
+  background: transparent;
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--primary-purple);
+  color: white;
+}
+
+/* FORMS */
+.form-control {
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+}
+
+.form-control:focus {
+  border-color: var(--primary-purple);
+  box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.2);
+}
+
+/* TABLES */
+.table thead th {
+  background-color: var(--light-gray);
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.table tbody tr:hover {
+  background-color: #fdf4ff;
+}
+
+/* BREADCRUMB */
+.breadcrumb {
+  background: transparent;
+}
+
+.breadcrumb a {
+  color: var(--primary-purple);
+}
+
+.breadcrumb li {
+  color: var(--text-color);
+}
+
+/* LOGIN BOX */
+.login-page {
+  background-color: var(--main-bg);
+}
+
+.login-box {
+  box-shadow: var(--shadow-lg);
+  border-radius: var(--border-radius);
+}
+
+.login-logo a {
+  color: var(--primary-purple);
+  font-weight: 700;
+}
+
+
+/* =========================== */
+/* FIX: User Permissions Select Box (Selector) */
+/* =========================== */
+.selector-available, .selector-chosen {
+  width: 95%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+}
+
+.selector-available select,
+.selector-chosen select {
+  width: 100%;
+  height: 300px;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  background-color: #ffffff;
+  color: #1f2937;
+  border-radius: 6px;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
+  overflow: auto;
+}
+
+/* Make the filter inputs match theme */
+.selector-available input,
+.selector-chosen input {
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+/* =========================== */
+/* FIX: Spacing Between "Add" and "Change" Buttons */
+/* =========================== */
+.object-tools {
+  display: flex;
+  gap: 8px;
+}
+
+.object-tools .button {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 6px;
+}
+
+/* Fix inline buttons (Add/Change) in model list view */
+td .button {
+  margin-right: 6px;
+  padding: 4px 10px;
+  font-size: 13px;
+  border-radius: 4px;
+}
+
+td .button:last-child {
+  margin-right: 0;
+}
+
+/* Improve background and contrast for table rows */
+.model-module td a {
+  font-weight: 500;
+  color: var(--primary-purple);
+}
+
+.model-module td {
+  vertical-align: middle;
+  padding: 10px 12px;
+}
+.btn-group .addlink{
+    margin-right: 10px;
+}

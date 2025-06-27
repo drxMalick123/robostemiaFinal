@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    
+<style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(to right, #f8f9fa, #e0eafc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+      margin: 0;
+    }
+
+    .card {
+      background: white;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+      width: 100%;
+      max-width: 350px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    h2 {
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 25px;
+      color: #343a40;
+    }
+
+    .form-style {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 1rem;
+    }
+
+    .form-group {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group label {
+      font-size: 0.95rem;
+      color: #495057;
+      font-weight: 500;
+      margin-bottom: 8px;
+      margin-left: 5px;
+    }
+
+    .form-style input {
+      width: 90%;
+      padding: 12px 18px;
+      border-radius: 50px;
+      border: 1px solid #ced4da;
+      font-size: 1rem;
+      background-color: #f8f9fa;
+      transition: 0.3s ease;
+    }
+
+    .form-style input:focus {
+      outline: none;
+      border-color: #4c83ff;
+      box-shadow: 0 0 0 4px rgba(76, 131, 255, 0.15);
+      background-color: white;
+    }
+
+    .form-style button {
+      width: 100%;
+      padding: 12px;
+      border-radius: 50px;
+      font-weight: 600;
+      background: linear-gradient(to right, #4c83ff, #5e60ce);
+      color: white;
+      border: none;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s ease;
+      margin-top: 5px;
+    }
+
+    .form-style button:hover {
+      background: linear-gradient(to right, #3a6ce0, #4e49c9);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+
+    .form-footer a {
+      color: #4c83ff;
+      text-decoration: none;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Compact Robot Animation */
+    .robot-container {
+      background: linear-gradient(135deg, #4c83ff, #00CEFF);
+      padding: 25px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+      border-radius: 20px 20px 0 0;
+      margin: -30px -30px 20px -30px;
+    }
+
+    .robot-container::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+      animation: rotate 20s linear infinite;
+    }
+
+    .robot {
+      width: 70px;
+      height: 120px;
+      position: relative;
+      transform-origin: center bottom;
+      animation: float 6s ease-in-out infinite;
+      z-index: 2;
+    }
+
+    .robot-head {
+      width: 50px;
+      height: 50px;
+      background: white;
+      border-radius: 50%;
+      position: relative;
+      margin: 0 auto;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .robot-face {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 40px;
+      height: 25px;
+    }
+
+    .robot-eyes {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      position: absolute;
+      top: 10px;
+    }
+
+    .robot-eye {
+      width: 10px;
+      height: 10px;
+      background: #343a40;
+      border-radius: 50%;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .robot-eye::before {
+      content: '';
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: white;
+      border-radius: 50%;
+      top: 2px;
+      left: 2px;
+    }
+
+    .robot-eye-lid {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      background: white;
+      border-radius: 50%;
+      top: -1px;
+      left: -1px;
+      transform: scaleY(0);
+      transform-origin: center top;
+      transition: transform 0.2s ease;
+    }
+
+    .robot-mouth {
+      width: 18px;
+      height: 3px;
+      background: #343a40;
+      border-radius: 2px;
+      position: absolute;
+      bottom: 5px;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: all 0.3s ease;
+    }
+
+    .robot-body {
+      width: 45px;
+      height: 55px;
+      background: white;
+      border-radius: 10px;
+      margin: 10px auto 0;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .robot-arm {
+      position: absolute;
+      width: 10px;
+      height: 30px;
+      background: white;
+      border-radius: 5px;
+      top: 10px;
+      transition: all 0.3s ease;
+    }
+
+    .robot-arm.left {
+      left: -7px;
+      transform-origin: top center;
+    }
+
+    .robot-arm.right {
+      right: -7px;
+    }
+
+    .robot-hand {
+      position: absolute;
+      width: 10px;
+      height: 6px;
+      background: white;
+      border-radius: 0 0 5px 5px;
+      bottom: -5px;
+    }
+
+    /* Animations */
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      50% {
+        transform: translateY(-8px) rotate(2deg);
+      }
+    }
+
+    @keyframes wave {
+      0%, 100% {
+        transform: rotate(0deg);
+      }
+      20%, 60% {
+        transform: rotate(-45deg);
+      }
+      40%, 80% {
+        transform: rotate(45deg);
+      }
+    }
+
+    @keyframes wink {
+      0%, 100% {
+        transform: scaleY(1);
+      }
+      50% {
+        transform: scaleY(0.1);
+      }
+    }
+
+    @keyframes nod {
+      0%, 100% {
+        transform: translateY(0) rotate(0deg);
+      }
+      30%, 70% {
+        transform: translateY(-4px) rotate(-4deg);
+      }
+      50% {
+        transform: translateY(-4px) rotate(4deg);
+      }
+    }
+
+    @keyframes shake {
+      0%, 100% {
+        transform: translateX(0) rotate(0deg);
+      }
+      20%, 60% {
+        transform: translateX(-4px) rotate(-4deg);
+      }
+      40%, 80% {
+        transform: translateX(4px) rotate(4deg);
+      }
+    }
+
+    @keyframes rotate {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes blink {
+      0%, 100% {
+        transform: scaleY(1);
+      }
+      50% {
+        transform: scaleY(0.05);
+      }
+    }
+
+    /* Robot States */
+    .wink {
+      animation: wink 0.3s ease;
+    }
+
+    .nod {
+      animation: nod 0.6s ease;
+    }
+
+    .shake {
+      animation: shake 0.5s ease;
+    }
+
+    .blink .robot-eye-lid {
+      animation: blink 0.2s ease;
+    }
+
+    .tilt-head {
+      transform: rotate(-4deg);
+    }
+
+    .smile .robot-mouth {
+      height: 2px;
+      width: 20px;
+      border-radius: 2px 2px 5px 5px;
+    }
+
+    @media (max-height: 650px) {
+      .robot {
+        width: 60px;
+        height: 100px;
+      }
+      .robot-head {
+        width: 45px;
+        height: 45px;
+      }
+      .robot-body {
+        width: 40px;
+        height: 50px;
+      }
+      .robot-arm {
+        height: 25px;
+      }
+      .robot-container {
+        padding: 20px 0;
+      }
+    }
+</style>
+</head>
+
+<body>
+
+    <div class="card">
+        <!-- Compact Robot Animation -->
+        <div class="robot-container">
+            <div class="robot" id="robot">
+                <div class="robot-head" id="robot-head">
+                    <div class="robot-face">
+                        <div class="robot-eyes">
+                            <div class="robot-eye" id="left-eye">
+                                <div class="robot-eye-lid"></div>
+                            </div>
+                            <div class="robot-eye" id="right-eye">
+                                <div class="robot-eye-lid"></div>
+                            </div>
+                        </div>
+                        <div class="robot-mouth" id="robot-mouth"></div>
+                    </div>
+                </div>
+                <div class="robot-body">
+                    <div class="robot-arm left" id="left-arm">
+                        <div class="robot-hand"></div>
+                    </div>
+                    <div class="robot-arm right">
+                        <div class="robot-hand"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h2>Login</h2>
+
+        
+            <!-- Robot animation would go here -->
+
+
+
+           
+            <form method="POST" class="form-style">
+                {% csrf_token %}
+                <div class="input-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        <div class="text-danger" style="color: red; font-size: small; margin-left: 10px;">{{ forme }}</div>
+                </div>
+
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            <div class="text-danger" style="color: red; font-size: small; margin-left: 10px;">{{ formp }}</div>
+                </div>
+
+                <button type="submit" id="login-btn">Login</button>
+            </form>
+
+            <div class="form-footer">
+             No account ?    <a href="{% url 'register' %}">Register here</a>
+            </div>
+          <div class="form-footer">
+      Go to RoboSTREMia website | <a href="{% url 'index' %}">Click This</a>
+    </div>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                // DOM Elements
+                const robot = document.getElementById('robot');
+                const robotHead = document.getElementById('robot-head');
+                const leftEye = document.getElementById('left-eye');
+                const rightEye = document.getElementById('right-eye');
+                const leftArm = document.getElementById('left-arm');
+                const robotMouth = document.getElementById('robot-mouth');
+                const passwordInput = document.querySelector('input[type="password"]');
+                const loginBtn = document.getElementById('login-btn');
+
+                // Mouse position tracking for eye movement
+                let mouseX = 0, mouseY = 0;
+                document.addEventListener('mousemove', (e) => {
+                    mouseX = e.clientX;
+                    mouseY = e.clientY;
+                    updateEyePosition();
+                });
+
+                function updateEyePosition() {
+                    const robotRect = robot.getBoundingClientRect();
+                    const robotCenterX = robotRect.left + robotRect.width / 2;
+                    const robotCenterY = robotRect.top + robotRect.height / 2;
+
+                    // Calculate angle between robot and mouse
+                    const angleX = (mouseX - robotCenterX) / 40;
+                    const angleY = (mouseY - robotCenterY) / 80;
+
+                    // Limit eye movement range
+                    const limitedX = Math.max(-2, Math.min(2, angleX));
+                    const limitedY = Math.max(-1, Math.min(1, angleY));
+
+                    leftEye.style.transform = `translate(${limitedX}px, ${limitedY}px)`;
+                    rightEye.style.transform = `translate(${limitedX}px, ${limitedY}px)`;
+                }
+
+                // Wave on load
+                setTimeout(() => {
+                    leftArm.style.animation = 'wave 1.2s ease-in-out';
+                    setTimeout(() => {
+                        leftArm.style.animation = '';
+                    }, 1200);
+                }, 600);
+
+                // Random animations
+                function randomAnimations() {
+                    // Random blink every 3-8 seconds
+                    setTimeout(() => {
+                        robotHead.classList.add('blink');
+                        setTimeout(() => {
+                            robotHead.classList.remove('blink');
+                            randomAnimations();
+                        }, 200);
+                    }, Math.random() * 5000 + 3000);
+                }
+                randomAnimations();
+
+                // Wink on hover
+                robot.addEventListener('mouseenter', () => {
+                    robotHead.classList.add('wink');
+                    robotHead.classList.add('tilt-head');
+                    robotMouth.classList.add('smile');
+                    setTimeout(() => {
+                        robotHead.classList.remove('wink');
+                    }, 300);
+                });
+
+                robot.addEventListener('mouseleave', () => {
+                    robotHead.classList.remove('tilt-head');
+                    robotMouth.classList.remove('smile');
+                });
+
+                // Close eyes when focusing on password
+                passwordInput.addEventListener('focus', () => {
+                    document.querySelectorAll('.robot-eye-lid').forEach(lid => {
+                        lid.style.transform = 'scaleY(1)';
+                    });
+                });
+
+                passwordInput.addEventListener('blur', () => {
+                    document.querySelectorAll('.robot-eye-lid').forEach(lid => {
+                        lid.style.transform = 'scaleY(0)';
+                    });
+                });
+
+                // Form submission animation
+                const form = document.querySelector('form');
+                form.addEventListener('submit', function (e) {
+                    // Check if form is valid
+                    const email = form.querySelector('input[type="email"]').value;
+                    const password = form.querySelector('input[type="password"]').value;
+
+                    if (email && password) {
+                        // Show loading state
+                        loginBtn.disabled = true;
+                        loginBtn.textContent = 'Logging in...';
+
+                        // Robot animations
+                        robotHead.classList.add('nod');
+                        robotMouth.classList.add('smile');
+
+                        setTimeout(() => {
+                            robotHead.classList.remove('nod');
+                        }, 600);
+                    } else {
+                        // Show error animation
+                        robotHead.classList.add('shake');
+                        setTimeout(() => {
+                            robotHead.classList.remove('shake');
+                        }, 500);
+                    }
+                });
+            });
+        </script>
+</body>
+
+</html>

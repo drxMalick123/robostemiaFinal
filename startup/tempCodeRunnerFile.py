@@ -1,0 +1,10 @@
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+        "robot.Person": "fas fa-robot",
+        "robot.Product": "fas fa-box",
+        "robot.Services": "fas fa-cogs",
+        "robot.Order": "fas fa-shopping-cart",
+        "robot.ContactMessage": "fas fa-envelope",
+    },

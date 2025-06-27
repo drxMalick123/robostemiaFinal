@@ -1,0 +1,726 @@
+{% extends "robot/base.html" %}
+{% block title %}Cart - MyShop{% endblock %}
+
+{% block content %}
+<section class="container cart-section">
+    <h2 class="cart-header">Your Shopping Cart</h2>
+    {% if not has_products %}
+    <div class="empty-cart-message text-center" id="emptyCartMessage">
+        <i class="fas fa-shopping-cart fa-3x mb-3 text-muted"></i>
+        <p class="lead">Your cart is empty. Start adding some amazing products!</p>
+        <a href="{% url 'shop' %}" class="btn btn-primary mt-3">Go to Shop</a>
+    </div>
+    {% endif %}
+    {% for item in user.usercartitem_set.all %}
+    {% for product in products %}
+    {% if product.id == item.product_id %}
+    <div class="cart-item-card mb-3 p-2 border rounded">
+        <div class="row align-items-center gy-3">
+            <div class="col-12 col-sm-auto text-center">
+                <a href="{% url 'product_detail' product.id %}">
+                    <img src="{{ product.image1.url }}" width="90" height="90" alt="{{ product.name }}"
+                        class="img-thumbnail rounded">
+                </a>
+            </div>
+            <div class="col-12 col-sm">
+                <a href="{% url 'product_detail' product.id %}" class="text-decoration-none text-dark">
+                    <h5 class="mb-1">{{ product.name }}</h5>
+                </a>
+                <p class="mb-1 text-muted small">Price: ₹{{ product.price }}</p>
+                <div class="d-flex align-items-center gap-2 mb-1">
+                    <a href="{% url 'update_cart_quantity' %}?id={{ item.id }}&action=decrease"
+                        class="btn btn-sm btn-outline-secondary">−</a>
+                    <span class="px-2">{{ item.product_count }}</span>
+                    <a href="{% url 'update_cart_quantity' %}?id={{ item.id }}&action=increase"
+                        class="btn btn-sm btn-outline-secondary">+</a>
+                </div>
+                <p class="mb-0 fw-semibold text-dark">Subtotal: ₹{% widthratio product.price 1 item.product_count %}</p>
+            </div>
+            <div class="col-12 col-sm-auto text-sm-end text-center">
+                <a href="{% url 'remove_from_cart' %}?id={{ item.id }}"
+                    class="btn btn-sm btn-outline-danger w-100 w-sm-auto">
+                    <i class="fas fa-trash-alt me-1"></i> Remove
+                </a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    {% endfor %}
+    {% endfor %}
+
+    <div id="cartItemsContainer"></div>
+
+    <div class="row justify-content-end" id="cartSummarySection">
+        <div class="col-lg-5 col-md-7">
+            <div class="cart-summary">
+                <h5>Cart Summary</h5>
+                <div class="d-flex mb-2">
+                    <span>Subtotal:</span>
+                    <span id="subtotal">₹{{ subtotal|floatformat:2 }}</span>
+                </div>
+                <div class="d-flex mb-2">
+                    <span>Shipping:</span>
+                    <span id="shippingCost">₹{{ shipping|floatformat:2 }}</span>
+                </div>
+                <div class="d-flex total">
+                    <span>Total:</span>
+                    <span id="totalAmount">₹{{ total|floatformat:2 }}</span>
+                </div>
+                <div class="btn-group mt-4" role="group" aria-label="Cart Actions">
+                    <a href="{% url 'shop' %}" class="btn btn-outline-primary btn-continue-shopping"
+                        style="border-radius: 10px;">
+                        <i class="fas fa-shopping-bag me-2"></i> Continue Shopping
+                    </a>
+                    <a class="btn btn-success btn-proceed-checkout" href="{% url 'checkout' %}">
+                        <i class="fas fa-credit-card me-2"></i> Proceed to Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+</section>
+
+<!-- Hidden products for lookup -->
+<div id="productList">
+    {% for product in products %}
+    <div class="product-card" data-id="{{ product.id }}" data-name="{{ product.name }}" data-price="{{ product.price }}"
+        data-image="{{ product.image1.url }}">
+    </div>
+    {% endfor %}
+</div>
+
+<!-- <script>
+document.addEventListener('DOMContentLoaded', function () {
+    const username = "{{ user.username }}";  // from Django template
+const cartKey = `cart_${username}`;  // example: "cart_devid"
+    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+    const cartItemsContainer = document.getElementById('cartItemsContainer');
+    const cartCountElement = document.getElementById('cartCount');
+    const subtotalElement = document.getElementById('subtotal');
+    const shippingCostElement = document.getElementById('shippingCost');
+    const totalAmountElement = document.getElementById('totalAmount');
+    const emptyCartMessage = document.getElementById('emptyCartMessage');
+    const cartSummarySection = document.getElementById('cartSummarySection');
+
+    const SHIPPING_RATE = 150;
+
+    function saveCart() {
+        const username = "{{ user.username }}";  // from Django template
+const cartKey = `cart_${username}`;  // example: "cart_devid"
+        localStorage.setItem(cartKey, JSON.stringify(cart));
+    }
+
+    function removeItem(id) {
+        cart = cart.filter(item => item.id != id);
+        saveCart();
+        renderCart();
+    }
+
+    function changeQuantity(id, delta) {
+        const item = cart.find(i => i.id == id);
+        if (item) {
+            item.count = Math.max(1, (item.count || 1) + delta); // at least 1
+            saveCart();
+            renderCart();
+        }
+    }
+
+    function renderCart() {
+        cartItemsContainer.innerHTML = '';
+        let totalQty = 0;
+        let subtotal = 0;
+
+        if (cart.length === 0) {
+            emptyCartMessage.style.display = 'block';
+            cartSummarySection.style.display = 'none';
+            cartCountElement.textContent = 0;
+            return;
+        }
+
+        emptyCartMessage.style.display = 'none';
+        cartSummarySection.style.display = 'block';
+
+        cart.forEach(cartItem => {
+            const productDiv = document.querySelector(`.product-card[data-id="${cartItem.id}"]`);
+            if (!productDiv) return;
+
+            const name = productDiv.dataset.name;
+            const price = parseFloat(productDiv.dataset.price);
+            const image = productDiv.dataset.image;
+            const quantity = parseInt(cartItem.count ?? 1);
+
+            if (isNaN(price) || isNaN(quantity)) return;
+
+            const itemTotal = price * quantity;
+            totalQty += quantity;
+            subtotal += itemTotal;
+
+            const card = document.createElement('div');
+            card.className = 'cart-item-card mb-3 p-2 border rounded';
+            card.innerHTML = `
+                <div class="row align-items-center gy-3">
+                    <div class="col-12 col-sm-auto text-center">
+                        <a href="/product-detail/${cartItem.id}/">
+                            <img src="${image}" width="90" height="90" alt="${name}" class="img-thumbnail rounded">
+                        </a>
+                    </div>
+                    <div class="col-12 col-sm">
+                        <a href="/product-detail/${cartItem.id}/" class="text-decoration-none text-dark">
+                            <h5 class="mb-1">${name}</h5>
+                        </a>
+                        <p class="mb-1 text-muted small">Price: ₹${price.toFixed(2)}</p>
+                        <div class="d-flex align-items-center gap-2 mb-1">
+                            <button class="btn btn-sm btn-outline-secondary btn-qty" data-id="${cartItem.id}" data-action="decrease">−</button>
+                            <span class="px-2">${quantity}</span>
+                            <button class="btn btn-sm btn-outline-secondary btn-qty" data-id="${cartItem.id}" data-action="increase">+</button>
+                        </div>
+                        <p class="mb-0 fw-semibold text-dark">Subtotal: ₹${itemTotal.toFixed(2)}</p>
+                    </div>
+                    <div class="col-12 col-sm-auto text-sm-end text-center">
+                        <button class="btn btn-sm btn-outline-danger btn-remove w-100 w-sm-auto" data-id="${cartItem.id}">
+                            <i class="fas fa-trash-alt me-1"></i> Remove
+                        </button>
+                    </div>
+                </div>
+            `;
+
+            cartItemsContainer.appendChild(card);
+        });
+
+        const total = subtotal + SHIPPING_RATE;
+        cartCountElement.textContent = totalQty;
+        subtotalElement.textContent = `₹${subtotal.toFixed(2)}`;
+        shippingCostElement.textContent = `₹${SHIPPING_RATE.toFixed(2)}`;
+        totalAmountElement.textContent = `₹${total.toFixed(2)}`;
+
+        // Attach event listeners
+        document.querySelectorAll('.btn-remove').forEach(button => {
+            button.addEventListener('click', () => {
+                const id = parseInt(button.dataset.id);
+                removeItem(id);
+            });
+        });
+
+        document.querySelectorAll('.btn-qty').forEach(button => {
+            const id = parseInt(button.dataset.id);
+            const action = button.dataset.action;
+            button.addEventListener('click', () => {
+                changeQuantity(id, action === 'increase' ? 1 : -1);
+            });
+        });
+    }
+
+    renderCart();
+});
+</script> -->
+
+
+
+
+
+<style>
+    /* Global Reset and Overflow Fixes */
+    html,
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        overflow-x: hidden;
+        /* Crucial for preventing horizontal scroll */
+        width: 100%;
+        /* Ensures body doesn't implicitly stretch */
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Universal box-sizing and min-width to prevent overflow from children elements */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        min-width: 0;
+        /* Prevents flex/grid items from forcing overflow */
+    }
+
+    /* Ensure images scale down properly and don't cause overflow */
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        /* Removes extra space below images */
+    }
+
+    /* Ensure Bootstrap containers and rows are fully contained */
+    .container,
+    .container-fluid {
+        overflow: hidden;
+        /* Prevents children from spilling out horizontally */
+        padding-left: var(--bs-gutter-x, 0.75rem);
+        /* Default Bootstrap gutter is 1.5rem, so 0.75rem each side */
+        padding-right: var(--bs-gutter-x, 0.75rem);
+    }
+
+    .row {
+        /* Ensure rows behave correctly and don't cause overflow with their negative margins */
+        margin-right: calc(-.5 * var(--bs-gutter-x));
+        margin-left: calc(-.5 * var(--bs-gutter-x));
+        width: calc(100% + var(--bs-gutter-x));
+        /* Explicitly set width to account for negative margins */
+        overflow: hidden;
+        /* Another layer of defense against child overflow */
+    }
+
+    /* Sticky Navigation Bar */
+    .navbar {
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar-brand img {
+        height: 40px;
+    }
+
+    .nav-link {
+        font-weight: 500;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #007bff;
+    }
+
+    .navbar-toggler:focus {
+        box-shadow: none;
+        /* Remove outline on navbar toggler button when focused */
+    }
+
+
+    /* Cart Section */
+    .cart-section {
+        padding: 60px 0;
+    }
+
+    .cart-header {
+        font-weight: 700;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #007bff;
+    }
+
+    /* Cart Item Card (for smaller screens) */
+    /* CART ITEM CARD (Visible on mobile/tablet) */
+    .cart-item-card {
+        background-color: #fff;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        padding: 20px;
+        margin-bottom: 20px;
+        display: flex;
+        gap: 15px;
+        align-items: flex-start;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .cart-item-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .cart-item-card img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 10px;
+        border: 1px solid #dee2e6;
+    }
+
+    .cart-item-card .item-details {
+        flex: 1;
+    }
+
+    .cart-item-card .item-details h5 {
+        font-size: 1.2rem;
+        font-weight: 600;
+        margin: 0 0 5px;
+        color: #343a40;
+    }
+
+    .cart-item-card .item-details p {
+        margin: 4px 0;
+        font-size: 0.95rem;
+        color: #6c757d;
+    }
+
+    .cart-item-card .item-details .price,
+    .cart-item-card .item-details .subtotal {
+        color: #007bff;
+        font-weight: 600;
+    }
+
+    .cart-item-card .btn-remove {
+        background-color: #f8d7da;
+        color: #dc3545;
+        border: none;
+        padding: 5px 12px;
+        font-size: 0.9rem;
+        border-radius: 6px;
+        cursor: pointer;
+        margin-top: 10px;
+        transition: background-color 0.3s ease;
+    }
+
+    .cart-item-card .btn-remove:hover {
+        background-color: #f1b0b7;
+        color: #bd2130;
+    }
+
+    /* CART SUMMARY SECTION */
+    .cart-summary {
+        background-color: #fff;
+        border-radius: 12px;
+        padding: 25px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        margin-top: 20px;
+    }
+
+    .cart-summary h5 {
+        text-align: center;
+        font-weight: 700;
+        color: #007bff;
+        margin-bottom: 20px;
+    }
+
+    .cart-summary .d-flex {
+        justify-content: space-between;
+        margin-bottom: 12px;
+        font-size: 1.05rem;
+    }
+
+    .cart-summary .total {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #212529;
+        border-top: 1px solid #dee2e6;
+        padding-top: 15px;
+        margin-top: 10px;
+    }
+
+    /* BUTTON GROUP FOR CART */
+    .cart-summary .btn-group .btn {
+        font-size: 1rem;
+        font-weight: 600;
+        padding: 10px 20px;
+        border-radius: 8px;
+        transition: transform 0.2s ease;
+    }
+
+    .cart-summary .btn-group .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    .btn-proceed-checkout {
+        background-color: #28a745;
+        border: none;
+        color: #fff;
+    }
+
+    .btn-proceed-checkout:hover {
+        background-color: #218838;
+    }
+
+    .btn-continue-shopping {
+        background-color: #007bff;
+        border: none;
+        color: #fff;
+    }
+
+    .btn-continue-shopping:hover {
+        background-color: #0056b3;
+    }
+
+    /* EMPTY CART MESSAGE */
+    .empty-cart-message {
+        background: #ffffff;
+        padding: 60px 20px;
+        border-radius: 12px;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        text-align: center;
+        color: #6c757d;
+        font-size: 1.1rem;
+    }
+
+    .empty-cart-message i {
+        font-size: 3rem;
+        color: #adb5bd;
+        margin-bottom: 10px;
+    }
+
+    /* Cart Table (for larger screens) */
+    .table-cart {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        /* Ensures rounded corners */
+    }
+
+    .table-cart th,
+    .table-cart td {
+        vertical-align: middle;
+        padding: 15px;
+    }
+
+    .table-cart thead th {
+        background-color: #007bff;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .table-cart tbody td {
+        color: #343a40;
+    }
+
+    .table-cart .product-img {
+        width: 80px;
+        height: 80px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .table-cart .item-name {
+        font-weight: 600;
+        font-size: 1.1rem;
+    }
+
+    .table-cart .item-price {
+        font-weight: 700;
+        color: #007bff;
+    }
+
+    .table-cart .quantity-input {
+        width: 70px;
+        text-align: center;
+        border-radius: 5px;
+        border: 1px solid #ced4da;
+        padding: 5px;
+    }
+
+    .table-cart .btn-remove {
+        background: none;
+        border: none;
+        color: #dc3545;
+        font-size: 1.2rem;
+        transition: color 0.3s ease;
+    }
+
+    .table-cart .btn-remove:hover {
+        color: #c82333;
+        transform: scale(1.1);
+    }
+
+    /* Cart Summary */
+    .cart-summary {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        padding: 30px;
+        margin-top: 30px;
+        /* Adjust spacing */
+    }
+
+    .cart-summary h5 {
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #007bff;
+        text-align: center;
+    }
+
+    .cart-summary .d-flex {
+        justify-content: space-between;
+        margin-bottom: 10px;
+        font-size: 1.1rem;
+    }
+
+    .cart-summary .total {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #343a40;
+        border-top: 1px solid #e9ecef;
+        padding-top: 15px;
+        margin-top: 15px;
+    }
+
+    .cart-summary .btn-group {
+        margin-top: 25px;
+        display: flex;
+        flex-direction: column;
+        /* Default stack on small screens */
+        align-items: center;
+        /* Center items when stacked */
+    }
+
+    .cart-summary .btn-group .btn {
+        padding: 12px 20px;
+        font-size: 1.05rem;
+        font-weight: 600;
+        border-radius: 10px;
+        /* Ensures fully rounded shape for all buttons in the group */
+        transition: transform 0.3s ease;
+        width: 100%;
+        /* Make them full width of parent on small screens */
+        max-width: 300px;
+        /* Limit max width even when stacked */
+    }
+
+    .cart-summary .btn-group .btn+.btn {
+        margin-top: 15px;
+        /* Spacing for stacked buttons */
+        margin-left: 0;
+        /* Reset margin-left for stacked */
+    }
+
+    @media (min-width: 768px) {
+        .cart-summary .btn-group {
+            flex-direction: row;
+            /* Side-by-side on larger screens */
+            justify-content: center;
+            /* Center the group of buttons */
+            gap: 15px;
+            /* Space between buttons */
+            align-items: center;
+            /* Align items vertically in the row */
+        }
+
+        .cart-summary .btn-group .btn {
+            width: auto;
+            /* Allow buttons to take natural width */
+            max-width: none;
+            /* Remove max-width restriction on larger screens */
+        }
+
+        .cart-summary .btn-group .btn+.btn {
+            margin-top: 0;
+            /* No top margin when side-by-side */
+        }
+    }
+
+    /* Styles for Continue Shopping button */
+    .btn-continue-shopping:hover {
+        transform: translateY(-2px);
+    }
+
+    .btn-proceed-checkout {
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+    .btn-proceed-checkout:hover {
+        background-color: #218838;
+        border-color: #218838;
+        transform: translateY(-2px);
+    }
+
+    /* Empty Cart Message */
+    .empty-cart-message {
+        text-align: center;
+        padding: 80px 0;
+        font-size: 1.2rem;
+        color: #6c757d;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        margin-top: 30px;
+    }
+
+    .empty-cart-message i {
+        font-size: 3rem;
+        color: #adb5bd;
+        margin-bottom: 20px;
+    }
+
+    /* Footer */
+    .footer {
+        background-color: #343a40;
+        color: #f8f9fa;
+        padding: 50px 0;
+        font-size: 0.9rem;
+        margin-top: 50px;
+    }
+
+    .footer h5 {
+        color: #ffffff;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .footer ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer ul li a {
+        color: #adb5bd;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer ul li a:hover {
+        color: #007bff;
+    }
+
+    .footer .social-icons a {
+        color: #f8f9fa;
+        font-size: 1.5rem;
+        margin-right: 15px;
+        transition: color 0.3s ease;
+    }
+
+    .footer .social-icons a:hover {
+        color: #007bff;
+    }
+
+    .footer .bottom-bar {
+        border-top: 1px solid #495057;
+        padding-top: 20px;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    /* Responsive adjustments for cart items */
+    @media (max-width: 767.98px) {
+        .table-cart {
+            display: none;
+            /* Hide table on small screens */
+        }
+
+        .cart-item-card .item-details {
+            text-align: left;
+        }
+
+        .cart-item-card .item-details h5 {
+            margin-top: 0;
+        }
+
+        .cart-item-card .d-flex.align-items-center.ms-auto {
+            flex-direction: column;
+            align-items: flex-end !important;
+        }
+
+        .cart-item-card .quantity-input {
+            margin-bottom: 10px;
+        }
+    }
+
+
+
+    .active-page {
+        font-weight: bold;
+        color: #007bff;
+    }
+</style>
+
+{% endblock %}

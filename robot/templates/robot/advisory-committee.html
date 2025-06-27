@@ -1,0 +1,185 @@
+{% extends "robot/base.html" %}
+{% block title %}Committee Members - MyShop{% endblock %}
+
+{% block content %}
+
+<section class="container meet-the-team">
+    <h2 class="mb-5">Advisory committee </h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for member in advisory_members %}
+        <div class="col">
+            <div class="card team-member-card">
+                <img src="{{ member.image.url|default:'/media/default.jpg' }}" alt="{{ member.name }}">
+                <div class="card-body">
+                    <h3 class="card-title">{{ member.name }}</h3>
+          
+                    <p class="bio">{{ member.designation }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+</section>
+<section class="container meet-the-team1">
+    <h2 class="mb-5">Scientific Committee</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for member in committee_members %}
+        <div class="col">
+            <div class="card team-member-card">
+                <img src="{{ member.image.url|default:'/media/default.jpg' }}" alt="{{ member.name }}">
+                <div class="card-body">
+                    <h3 class="card-title">{{ member.name }}</h3>
+          
+                    <p class="bio">{{ member.designation }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    
+</section>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        overflow-x: hidden;
+    }
+
+    .navbar {
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar-brand img {
+        height: 40px;
+    }
+
+    .nav-link {
+        font-weight: 500;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #007bff;
+    }
+
+    .meet-the-team {
+        padding: 80px 0;
+    }
+    .meet-the-team1 {
+        padding-bottom: 80px;
+    }
+    .team-member-card {
+        height: 360px;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        background-color: #ffffff;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .team-member-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .team-member-card img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin: 20px auto;
+        border: 5px solid #007bff;
+    }
+
+    .team-member-card h3 {
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #007bff;
+    }
+
+    .team-member-card p.role {
+        color: #007bff;
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+
+    .team-member-card p.bio {
+      
+        font-size: 0.95rem;
+        color: #3f3f3f;
+        padding: 0 20px;
+    }
+
+    .footer {
+        background-color: #343a40;
+        color: #f8f9fa;
+        padding: 50px 0;
+        font-size: 0.9rem;
+    }
+
+    .footer h5 {
+        color: #ffffff;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .footer ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer ul li a {
+        color: #adb5bd;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer ul li a:hover {
+        color: #007bff;
+    }
+
+    .footer .social-icons a {
+        color: #f8f9fa;
+        font-size: 1.5rem;
+        margin-right: 15px;
+        transition: color 0.3s ease;
+    }
+
+    .footer .social-icons a:hover {
+        color: #007bff;
+    }
+
+    .footer .bottom-bar {
+        border-top: 1px solid #495057;
+        padding-top: 20px;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .active-page {
+        font-weight: bold;
+        color: #007bff;
+    }
+
+
+
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+
+
+
+
+
+</style>
+
+{% endblock %}

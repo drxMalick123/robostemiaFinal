@@ -1,0 +1,603 @@
+{% extends "robot/base.html" %}
+{% block title %}Contact - MyShop{% endblock %}
+
+{% block content %}
+
+<div id="contactHeroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+    <div class="carousel-inner">
+        <div class="carousel-item active" style="background-image: url('https://picsum.photos/1600/900?random=11');">
+            <div class="d-flex h-100 align-items-center justify-content-center">
+                <div class="carousel-caption text-center">
+                    <h5>Get in Touch</h5>
+                    <p>We're here to help with any questions or support you need.</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item" style="background-image: url('https://picsum.photos/1600/900?random=12');">
+            <div class="d-flex h-100 align-items-center justify-content-center">
+                <div class="carousel-caption text-center">
+                    <h5>Reach Out to Our Team</h5>
+                    <p>Your feedback and inquiries are important to us.</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item" style="background-image: url('https://picsum.photos/1600/900?random=13');">
+            <div class="d-flex h-100 align-items-center justify-content-center">
+                <div class="carousel-caption text-center">
+                    <h5>Connect With Us!</h5>
+                    <p>We look forward to hearing from you.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#contactHeroCarousel" data-bs-slide="prev"
+        aria-label="Previous slide">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#contactHeroCarousel" data-bs-slide="next"
+        aria-label="Next slide">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+{% if messages %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{% endfor %}
+{% endif %}
+<section class="container contact-section">
+    <div class="row justify-content-center g-4">
+        <div class="col-lg-7">
+            <div class="card contact-form-card">
+                <h2 class="text-center mb-4 fw-bold">Send Us a Message</h2>
+                <form class="contact-form" id="contactForm" method="POST" action="/contact/" novalidate>
+                    {% csrf_token %}
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" id="name" placeholder="Your Name" required
+                            aria-label="Your Name" name="name">
+                        <label for="name">Your Name</label>
+                        <div class="invalid-feedback">
+                            Please enter your name.
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com"
+                            required aria-label="Email address">
+                        <label for="email">Email address</label>
+                        <div class="invalid-feedback">
+                            Please enter a valid email address.
+                        </div>
+                    </div>
+<div class="form-floating mb-3">
+    <input 
+        type="tel" 
+        class="form-control" 
+        id="subject" 
+        name="subject" 
+        placeholder="Phone No." 
+        required 
+        pattern="\d{10}" 
+        maxlength="10" 
+        minlength="10" 
+        aria-label="Phone No.">
+    <label for="subject">Phone No.</label>
+    <div class="invalid-feedback">
+        Please enter a valid 10-digit phone number.
+    </div>
+</div>
+
+                    <div class="form-floating mb-3">
+                        <textarea class="form-control" placeholder="Leave a message here" name="message" id="message"
+                            style="height: 150px" required aria-label="Message"></textarea>
+                        <label for="message">Message</label>
+                        <div class="invalid-feedback">
+                            Please enter your message.
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="card contact-info-card">
+                <h5 class="text-white">Contact Information</h5>
+                <!-- <p><i class="fas fa-map-marker-alt icon" aria-hidden="true"></i> 123 E-commerce Ave, Suite 456, City,
+                    Country</p> -->
+                <p><i class="fas fa-phone icon" aria-hidden="true"></i> +91 6291442516</p>
+                <p><i class="fas fa-envelope icon" aria-hidden="true"></i>robostemia@gmail.com</p>
+                <p><i class="fas fa-clock icon" aria-hidden="true"></i> Mon-Fri: 9:00 AM - 6:00 PM (IST)</p>
+                <p class="mt-4">Feel free to reach out to us during our support hours. We're always happy to assist!</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container my-5">
+    <h2 class="text-center mb-4 fw-bold">Find Us on the Map</h2>
+    <div class="google-map">
+<iframe
+    src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3696.5961475670056!2d88.127231!3d22.103235!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zMjLCsDA2JzExLjciTiA4OMKwMDcnMzguMCJF!5e0!3m2!1sen!2sin!4v1750847608843!5m2!1sen!2sin"
+    allowfullscreen=""
+
+    referrerpolicy="no-referrer-when-downgrade"
+    title="Our Location on Google Maps"
+    style="width: 100%; height: 450px; border: 0; border-radius: 10px; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);">
+</iframe>
+
+    </div>
+</section>
+
+<section class="container newsletter-section">
+    <h2>Stay Updated with Our Newsletter</h2>
+    <p class="text-muted mb-4">Get exclusive offers, product launches, and more directly to your inbox.</p>
+    <form class="d-flex flex-column align-items-center">
+        <input type="email" class="form-control mb-3" placeholder="Enter your email address" required
+            aria-label="Enter your email address">
+        <button type="submit" class="btn btn-primary">Subscribe</button>
+    </form>
+</section>
+
+<script>
+
+document.getElementById('subject').addEventListener('input', function (e) {
+    this.value = this.value.replace(/\D/g, ''); // remove non-digits
+});
+
+
+    // Basic Form Validation (Bootstrap's built-in validation)
+    (function () {
+        'use strict';
+        var forms = document.querySelectorAll('.contact-form');
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        form.classList.add('was-validated');
+                    } else {
+                        // ✅ Do not prevent default
+                        // ✅ Let the form POST to /contact/
+                        form.classList.add('was-validated');
+                        // Remove alert & reset from here
+                    }
+                }, false);
+            });
+    })();
+
+    // Newsletter subscription alert
+    document.querySelector('.newsletter-section form').addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent default form submission
+        const emailInput = this.querySelector('input[type="email"]');
+        if (emailInput.checkValidity()) {
+            alert('Thank you for subscribing to our newsletter!');
+            emailInput.value = ''; // Clear the input field
+        } else {
+            alert('Please enter a valid email address.');
+        }
+    });
+</script>
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        /* This is the primary fix for the horizontal scrollbar. */
+        /* It hides any content that overflows horizontally. */
+        overflow-x: hidden;
+    }
+
+    /* Sticky Navigation Bar */
+    .navbar {
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        padding:8px;
+        /* Added padding for better visual spacing */
+        position: sticky;
+        /* Make navbar sticky */
+        top: 0;
+        /* Stick to the top */
+        z-index: 1020;
+        /* Ensure it's above other content */
+    }
+
+    .navbar-brand img {
+        height: 40px;
+    }
+
+    .nav-link {
+        font-weight: 500;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #007bff;
+    }
+
+    /* Ensure navbar-toggler doesn't cause overflow */
+    .navbar-toggler {
+        padding: .25rem .75rem;
+        font-size: 1.25rem;
+        line-height: 1;
+        background-color: transparent;
+        border: 1px solid transparent;
+        border-radius: .25rem;
+    }
+
+    .navbar-toggler:focus {
+        text-decoration: none;
+        outline: 0;
+        box-shadow: 0 0 0 .25rem;
+        /* Remove focus ring that might cause overflow */
+    }
+
+
+    /* Hero Carousel */
+    .carousel-item {
+        height: 450px;
+        /* Adjust as needed */
+        background-size: cover;
+        background-position: center;
+        position: relative;
+        background-repeat: no-repeat;
+    }
+
+    .carousel-caption {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 25px;
+        border-radius: 8px;
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 800px;
+        animation: fadeIn 1.5s ease-out;
+        text-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        /* Add box-sizing to ensure padding is included in the width */
+        box-sizing: border-box;
+    }
+
+    .carousel-caption h5 {
+        font-size: 3rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .carousel-caption p {
+        font-size: 1.3rem;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -60%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    /* Contact Section */
+    .contact-section {
+        padding: 60px 0;
+    }
+
+    .contact-form-card,
+    .contact-info-card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        height: 100%;
+        /* Ensures cards in a row have equal height */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* Add box-sizing to ensure padding is included in the width */
+        box-sizing: border-box;
+    }
+
+    .contact-info-card {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .contact-info-card h5 {
+        font-weight: 600;
+        margin-bottom: 25px;
+        font-size: 1.6rem;
+    }
+
+    .contact-info-card p {
+        margin-bottom: 15px;
+        font-size: 1.1rem;
+        display: flex;
+        align-items: flex-start;
+    }
+
+    .contact-info-card .icon {
+        font-size: 1.5rem;
+        margin-right: 15px;
+        flex-shrink: 0;
+    }
+
+    .contact-form .form-floating>.form-control,
+    .contact-form .form-floating>.form-control-plaintext,
+    .contact-form .form-floating>.form-select {
+        padding:2rem 0.75rem;
+        height: calc(4.8rem + 2px);
+    }
+
+    .contact-form .form-floating>label {
+        padding: 1rem 0.75rem;
+    }
+
+    .contact-form .form-control:focus {
+        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        border-color: #007bff;
+    }
+
+    .contact-form textarea.form-control {
+        min-height: 120px;
+        resize: vertical;
+    }
+
+    .contact-form .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        padding: 12px 30px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .contact-form .btn-primary:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+        transform: translateY(-3px);
+    }
+
+    /* Google Map */
+    .google-map {
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+        height: 450px;
+        /* Ensure map container doesn't overflow */
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .google-map iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+        display: block;
+        /* Remove any extra space below iframe */
+    }
+
+    /* Newsletter */
+    .newsletter-section {
+        background-color: #e9ecef;
+        padding: 50px 0;
+        text-align: center;
+        border-radius: 10px;
+        margin-top: 50px;
+        margin-bottom: 50px;
+        /* Ensure newsletter section itself doesn't overflow */
+        box-sizing: border-box;
+        width: 100%;
+        /* Explicitly set width */
+    }
+
+    .newsletter-section h2 {
+        font-weight: 700;
+        color: #343a40;
+        margin-bottom: 25px;
+    }
+
+    .newsletter-section .form-control {
+        max-width: 400px;
+        margin: 0 auto 15px auto;
+        border-radius: 50px;
+        padding: 12px 20px;
+        border: 1px solid #ced4da;
+        /* Ensure box-sizing for the form control */
+        box-sizing: border-box;
+    }
+
+    .newsletter-section .btn {
+        border-radius: 50px;
+        padding: 12px 40px;
+        font-weight: 600;
+        transition: transform 0.3s ease;
+    }
+
+    .newsletter-section .btn:hover {
+        transform: translateY(-2px);
+    }
+
+    /* Footer */
+    .footer {
+        background-color: #343a40;
+        color: #f8f9fa;
+        padding: 50px 0;
+        font-size: 0.9rem;
+    }
+
+    .footer h5 {
+        color: #ffffff;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .footer ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer ul li a {
+        color: #adb5bd;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer ul li a:hover {
+        color: #007bff;
+    }
+
+    .footer .social-icons a {
+        color: #f8f9fa;
+        font-size: 1.5rem;
+        margin-right: 15px;
+        transition: color 0.3s ease;
+    }
+
+    .footer .social-icons a:hover {
+        color: #007bff;
+    }
+
+    .footer .bottom-bar {
+        border-top: 1px solid #495057;
+        padding-top: 20px;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 991.98px) {
+        .carousel-caption h5 {
+            font-size: 2.5rem;
+        }
+
+        .carousel-caption p {
+            font-size: 1.1rem;
+        }
+
+        .contact-form-card,
+        .contact-info-card {
+            padding: 30px;
+        }
+
+        .contact-info-card {
+            margin-top: 2rem;
+            /* Add space between cards on smaller screens */
+        }
+
+        .google-map {
+            height: 350px;
+        }
+
+        .newsletter-section {
+            padding: 40px 0;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .carousel-item {
+            height: 350px;
+        }
+
+        .carousel-caption {
+            padding: 20px;
+            width: 95%;
+            /* Allow slightly more width on smaller screens, still within bounds */
+        }
+
+        .carousel-caption h5 {
+            font-size: 2rem;
+        }
+
+        .carousel-caption p {
+            font-size: 1rem;
+        }
+
+        .contact-section {
+            padding: 40px 0;
+        }
+
+        .contact-form-card,
+        .contact-info-card {
+            padding: 25px;
+        }
+
+        .google-map {
+            height: 300px;
+            margin-top: 40px;
+        }
+
+        .footer {
+            padding: 40px 0;
+        }
+
+        .footer h5 {
+            margin-bottom: 15px;
+        }
+
+        .footer .social-icons a {
+            font-size: 1.3rem;
+            margin-right: 10px;
+        }
+    }
+
+    @media (max-width: 575.98px) {
+        .carousel-item {
+            height: 250px;
+        }
+
+        .carousel-caption {
+            /* Further adjust padding for very small screens */
+            padding: 15px;
+        }
+
+        .carousel-caption h5 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .carousel-caption p {
+            font-size: 0.9rem;
+        }
+
+        .contact-form .btn-primary {
+            padding: 10px 20px;
+            font-size: 1rem;
+        }
+
+        .newsletter-section .btn {
+            padding: 10px 30px;
+        }
+
+        /* Ensure container doesn't get squished by its own padding on very small screens */
+        .container {
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+
+        /* Reduce margin-right for social icons on very small screens if necessary */
+        .footer .social-icons a {
+            margin-right: 8px;
+        }
+    }
+
+    .active-page {
+        font-weight: bold;
+        color: #007bff;
+    }
+</style>
+
+{% endblock %}

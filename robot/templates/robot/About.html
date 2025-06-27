@@ -1,0 +1,388 @@
+{% extends "robot/base.html" %}
+{% block title %}About - MyShop{% endblock %}
+
+{% block content %}
+
+<div id="aboutHeroCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="3000">
+    <div class="carousel-inner">
+        <div class="carousel-item active" style="background-image: url('https://picsum.photos/1600/900?random=14');">
+            <div class="d-flex h-100 align-items-center justify-content-center">
+                <div class="carousel-caption text-center">
+                    <h5>Welcome to Our Brand</h5>
+                    <p>Your ultimate destination for quality and innovation.</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item" style="background-image: url('https://picsum.photos/1600/900?random=15');">
+            <div class="d-flex h-100 align-items-center justify-content-center">
+                <div class="carousel-caption text-center">
+                    <h5>Driven by Passion</h5>
+                    <p>We are passionate about delivering exceptional products and experiences.</p>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item" style="background-image: url('https://picsum.photos/1600/900?random=16');">
+            <div class="d-flex h-100 align-items-center justify-content-center">
+                <div class="carousel-caption text-center">
+                    <h5>Trusted by Thousands</h5>
+                    <p>Join our community of satisfied customers worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#aboutHeroCarousel" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#aboutHeroCarousel" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>
+
+<section class="container about-us-section">
+    <h2 class="mb-5">Our Story & Values</h2>
+    <div class="row align-items-center">
+        <div class="col-md-6 mb-4 mb-md-0">
+            <img src="https://picsum.photos/800/600?random=17" class="img-fluid" alt="About Us">
+        </div>
+        <div class="col-md-6">
+            <p>
+                Every great innovation starts with a simple question: "What if students could turn their ideas into
+                reality?" Our journey began with a passion to bridge the gap between classroom learning and real-world
+                application. We saw talented students struggling to gain practical experience in electronics, robotics,
+                and software development. This inspired us to create a platform where knowledge meets hands-on
+                experience. Today, we are building a vibrant ecosystem where school and college students can learn STEM
+                skills, build live projects, and prepare for future careers in technology and innovation. From simple
+                coding lessons to complex robotics systems, from website development to custom hardware prototyping — we
+                empower young minds to innovate, create, and lead.
+            </p>
+
+        </div>
+    </div>
+</section>
+
+<section class="container mission-vision bg-light rounded py-5">
+    <h2 class="mb-5">Our Mission & Vision</h2>
+    <div class="row g-4">
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="icon"><i class="fas fa-bullseye"></i></div>
+                    <h5 class="card-title">Our Mission</h5>
+                    <p class="card-text">
+                        Our mission is to inspire and equip students-from schools to engineering colleges-with practical
+                        knowledge in robotics and STEM. We provide immersive training programs and deliver cutting-edge
+                        solutions, including custom website development and electronic product prototyping for academic
+                        and technical projects.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card h-100">
+                <div class="card-body">
+                    <div class="icon"><i class="fas fa-eye"></i></div>
+                    <h5 class="card-title">Our Vision</h5>
+                    <p class="card-text">
+                        To empower the next generation of innovators by bridging the gap between education and
+                        real-world technology through hands-on robotics, STEM training, and custom development services.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="container meet-the-team">
+    <h2 class="mb-5">Meet Our Team</h2>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for person in people %}
+        <div class="col">
+            <div class="card team-member-card">
+                <img src="/media/{{ person.image_url }}" alt="{{ person.name }}">
+                <div class="card-body">
+                    <h5 class="card-title">{{ person.name }}</h5>
+                    <p class="role">{{ person.designation }}</p>
+                    <p class="bio">{{ person.about }}</p>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+
+    </div>
+</section>
+
+<section class="container cta-section">
+    <h3>Ready to Explore Our Products?</h3>
+    <p class="lead mb-4">Discover a wide range of quality items tailored to your needs.</p>
+    <a href="/shop/" class="btn btn-primary btn-lg">Start Shopping Now!</a>
+    <a href="/contact/" class="btn btn-outline-primary btn-lg ms-3">Get in Touch</a>
+</section>
+
+
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        color: #343a40;
+    }
+
+    /* Sticky Navigation Bar */
+    .navbar {
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar-brand img {
+        height: 40px;
+    }
+
+    .nav-link {
+        font-weight: 500;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #007bff;
+    }
+
+    /* Hero Carousel */
+    .carousel-item {
+        height: 500px;
+        /* Adjust as needed */
+        background-size: cover;
+        background-position: center;
+        position: relative;
+    }
+
+    .carousel-caption {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 30px;
+        border-radius: 10px;
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        max-width: 900px;
+        animation: fadeIn 1.5s ease-out;
+    }
+
+    .carousel-caption h5 {
+        font-size: 3.5rem;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .carousel-caption p {
+        font-size: 1.5rem;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -70%);
+        }
+
+        to {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+    /* Section Styling */
+    section {
+        padding: 80px 0;
+    }
+
+    h2 {
+        font-weight: 700;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #007bff;
+    }
+
+    /* About Us Section */
+    .about-us-section img {
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+    }
+
+    .about-us-section img:hover {
+        transform: scale(1.02);
+    }
+
+    .about-us-section p {
+        line-height: 1.8;
+        font-size: 1.07rem;
+        color: #555;
+    }
+
+    /* Mission & Vision */
+    .mission-vision .card {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        padding: 30px;
+        text-align: center;
+        background-color: #ffffff;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .mission-vision .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .mission-vision .icon {
+        font-size: 3rem;
+        color: #007bff;
+        margin-bottom: 20px;
+    }
+
+    .mission-vision h5 {
+        font-weight: 600;
+        color: #343a40;
+        margin-bottom: 15px;
+    }
+
+    .mission-vision p {
+        font-size: 1rem;
+        color: #666;
+    }
+
+    /* Meet the Team */
+    .team-member-card {
+        height: 520px;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        background-color: #ffffff;
+        text-align: center;
+        padding-bottom: 20px;
+    }
+
+    .team-member-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .team-member-card img {
+        width: 150px;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 50%;
+        margin: 20px auto;
+        border: 5px solid #007bff;
+    }
+
+    .team-member-card h5 {
+        font-weight: 600;
+        margin-bottom: 5px;
+        color: #343a40;
+    }
+
+    .team-member-card p.role {
+        color: #007bff;
+        font-weight: 500;
+        margin-bottom: 15px;
+    }
+
+    .team-member-card p.bio {
+        font-size: 0.95rem;
+        color: #666;
+        padding: 0 20px;
+    }
+
+    /* Call to Action */
+    .cta-section {
+        background-color: #e9ecef;
+        padding: 70px 0;
+        text-align: center;
+        border-radius: 10px;
+        margin-top: 50px;
+    }
+
+    .cta-section a {
+        margin-bottom: 33px;
+    }
+
+    .cta-section h3 {
+        font-weight: 700;
+        color: #343a40;
+        margin-bottom: 25px;
+    }
+
+    .cta-section .btn {
+        padding: 15px 40px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: transform 0.3s ease, background-color 0.3s ease;
+    }
+
+    .cta-section .btn:hover {
+        transform: translateY(-3px);
+        background-color: #0056b3;
+    }
+
+    /* Footer */
+    .footer {
+        background-color: #343a40;
+        color: #f8f9fa;
+        padding: 50px 0;
+        font-size: 0.9rem;
+    }
+
+    .footer h5 {
+        color: #ffffff;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .footer ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer ul li a {
+        color: #adb5bd;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer ul li a:hover {
+        color: #007bff;
+    }
+
+    .footer .social-icons a {
+        color: #f8f9fa;
+        font-size: 1.5rem;
+        margin-right: 15px;
+        transition: color 0.3s ease;
+    }
+
+    .footer .social-icons a:hover {
+        color: #007bff;
+    }
+
+    .footer .bottom-bar {
+        border-top: 1px solid #495057;
+        padding-top: 20px;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .active-page {
+        font-weight: bold;
+        color: #007bff;
+    }
+</style>
+{% endblock %}

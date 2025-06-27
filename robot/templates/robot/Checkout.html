@@ -1,0 +1,633 @@
+{% extends "robot/base.html" %}
+{% block title %}Checkout - E-commerce{% endblock %}
+
+{% block content %}
+
+<section class="container checkout-section overflow-hidden">
+    <h2 class="checkout-header">Secure Checkout</h2>
+
+    <div class="row " id="checkoutRow">
+        <div class="col-lg-7 " id="checkoutForm">
+            <form class="needs-validation" method="post" novalidate>
+                {% csrf_token %}
+                <div class="form-card mb-4">
+                    <h5><i class="fas fa-address-card me-2"></i><i class="fas fa-truck me-2"></i> Billing and Shipping
+                        Information</h5>
+                    <div class="row g-3">
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="billingFirstName" name="billingFirstName"
+                                    placeholder="First Name" required>
+                                <label for="billingFirstName">First Name</label>
+                                <div class="invalid-feedback">Valid first name is required.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="billingLastName" name="billingLastName"
+                                    placeholder="Last Name" required>
+                                <label for="billingLastName">Last Name</label>
+                                <div class="invalid-feedback">Valid last name is required.</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="email" class="form-control" id="billingEmail" name="billingEmail"
+                                    placeholder="name@example.com" required>
+                                <label for="billingEmail">Email address</label>
+                                <div class="invalid-feedback">Please enter a valid email address.</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="tel" class="form-control" id="billingPhone" name="billingPhone"
+                                    placeholder="Phone Number" required pattern="[0-9]{10}" inputmode="numeric">
+                                <label for="billingPhone">Phone Number</label>
+                                <div class="invalid-feedback">Please enter a valid 10-digit phone number.</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="billingAddress1" name="billingAddress1"
+                                    placeholder="Address Line 1" required>
+                                <label for="billingAddress1">Address Line 1</label>
+                                <div class="invalid-feedback">Please enter your billing address.</div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="billingAddress2" name="billingAddress2"
+                                    placeholder="Address Line 2 (Optional)">
+                                <label for="billingAddress2">Address Line 2 (Optional)</label>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="billingCity" name="billingCity"
+                                    placeholder="City" required>
+                                <label for="billingCity">City</label>
+                                <div class="invalid-feedback">Please enter your city.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <select class="form-select" id="billingState" name="billingState" required>
+                                    <option value="">Choose...</option>
+
+                                    <!-- 🇮🇳 Indian States -->
+                                    <option>Andhra Pradesh</option>
+                                    <option>Arunachal Pradesh</option>
+                                    <option>Assam</option>
+                                    <option>Bihar</option>
+                                    <option>Chhattisgarh</option>
+                                    <option>Goa</option>
+                                    <option>Gujarat</option>
+                                    <option>Haryana</option>
+                                    <option>Himachal Pradesh</option>
+                                    <option>Jharkhand</option>
+                                    <option>Karnataka</option>
+                                    <option>Kerala</option>
+                                    <option>Madhya Pradesh</option>
+                                    <option>Maharashtra</option>
+                                    <option>Manipur</option>
+                                    <option>Meghalaya</option>
+                                    <option>Mizoram</option>
+                                    <option>Nagaland</option>
+                                    <option>Odisha</option>
+                                    <option>Punjab</option>
+                                    <option>Rajasthan</option>
+                                    <option>Sikkim</option>
+                                    <option>Tamil Nadu</option>
+                                    <option>Telangana</option>
+                                    <option>Tripura</option>
+                                    <option>Uttar Pradesh</option>
+                                    <option>Uttarakhand</option>
+                                    <option>West Bengal</option>
+
+                                    <!-- 🏛️ Union Territories -->
+                                    <option>Andaman and Nicobar Islands</option>
+                                    <option>Chandigarh</option>
+                                    <option>Dadra and Nagar Haveli and Daman and Diu</option>
+                                    <option>Delhi</option>
+                                    <option>Lakshadweep</option>
+                                    <option>Ladakh</option>
+                                    <option>Puducherry</option>
+                                    <option>Jammu and Kashmir</option>
+                                </select>
+
+                                <label for="billingState">State</label>
+                                <div class="invalid-feedback">Please select a valid state.</div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-floating">
+                                <input type="text" class="form-control" id="billingZip" name="billingZip"
+                                    placeholder="Zip" required pattern="[0-9]{6}" inputmode="numeric">
+                                <label for="billingZip">Zip</label>
+                                <div class="invalid-feedback">Please enter a 6-digit zip code.</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-card payment-options">
+                    <h5><i class="fas fa-wallet me-2"></i> Payment Method</h5>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="paymentMethod" id="cod" value="cod" checked>
+                        <label class="form-check-label" for="cod">
+                            <i class="fas fa-hand-holding-usd me-2"></i> Cash on Delivery (COD)
+                        </label>
+                    </div>
+                    <div id="codDetails" class="payment-details-card">
+                        <p class="mb-0 text-muted">You will pay cash upon delivery of your order.</p>
+                    </div>
+                </div>
+
+                <hr class="my-4">
+
+                <div class="d-grid gap-2">
+                    <button class="btn btn-primary btn-place-order" type="submit">
+                        <i class="fas fa-check-circle me-2"></i> Place Order
+                    </button>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-lg-5" id="orderSummary">
+            <div class="order-summary">
+                <h5><i class="fas fa-shopping-basket me-2"></i> Order Summary</h5>
+
+                <ul class="list-group list-group-flush" id="orderSummaryList">
+                    {% for item in items %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div class="d-flex align-items-center">
+                            <img src="{{ item.image_url }}" alt="{{ item.name }}" width="40" height="40"
+                                class="rounded me-2">
+                            <div>
+                                <strong>{{ item.name }}</strong><br>
+                                <small>Price: ₹{{ item.price }} × {{ item.quantity }}</small>
+                            </div>
+                        </div>
+                        <span>₹{{ item.total|floatformat:2 }}</span>
+                    </li>
+                    {% empty %}
+                    <li class="list-group-item text-muted text-center">Your cart is empty</li>
+                    {% endfor %}
+                </ul>
+
+                <div class="d-flex justify-content-between align-items-center mt-3 border-top pt-3 subtotal">
+                    <span><strong>Subtotal:</strong></span>
+                    <span id="summarySubtotal">₹{{ subtotal|floatformat:2 }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-1 shipping">
+                    <span><strong>Shipping:</strong></span>
+                    <span id="summaryShipping">₹{{ shipping|floatformat:2 }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center mt-2 fs-5 border-top pt-2 total">
+                    <span><strong>Order Total:</strong></span>
+                    <span id="summaryTotal">₹{{ total|floatformat:2 }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+<!-- <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Cart Data (Simulated from localStorage from previous page)
+            let cart = JSON.parse(localStorage.getItem('cart_drx')) || [
+                // Dummy data if localStorage is empty for direct page access
+                { id: 1, name: 'Premium Noise-Cancelling Headphones', price: 7999.00, quantity: 1 },
+                { id: 2, name: 'Ergonomic Office Chair', price: 12500.00, quantity: 1 }
+            ];
+            const SHIPPING_RATE = 150; // Example flat shipping rate in INR
+
+            const cartCountElement = document.getElementById('cartCount');
+            const sameAsBillingCheckbox = document.getElementById('sameAsBilling');
+            const shippingAddressFields = document.getElementById('shippingAddressFields');
+            const paymentMethodRadios = document.querySelectorAll('input[name="paymentMethod"]');
+            const paymentDetailsCards = {
+                creditCard: document.getElementById('creditCardDetails'),
+                upi: document.getElementById('upiDetails'),
+                cod: document.getElementById('codDetails')
+            };
+            const orderSummaryList = document.getElementById('orderSummaryList');
+            const summarySubtotal = document.getElementById('summarySubtotal');
+            const summaryShipping = document.getElementById('summaryShipping');
+            const summaryTotal = document.getElementById('summaryTotal');
+            const checkoutForm = document.querySelector('.needs-validation');
+
+            // Function to update cart count in navbar
+            function updateNavbarCartCount() {
+                const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+                cartCountElement.textContent = totalItems;
+            }
+
+            // Function to populate order summary
+            function updateOrderSummary() {
+                orderSummaryList.innerHTML = '';
+                let subtotal = 0;
+
+                if (cart.length === 0) {
+                    orderSummaryList.innerHTML = '<li class="list-group-item text-center text-muted">Your cart is empty.</li>';
+                    summarySubtotal.textContent = '₹0.00';
+                    summaryShipping.textContent = '₹0.00';
+                    summaryTotal.textContent = '₹0.00';
+                    return;
+                }
+
+                cart.forEach(item => {
+                    const itemTotal = item.price * item.quantity;
+                    subtotal += itemTotal;
+                    const listItem = `
+                        <li class="list-group-item">
+                            <span class="item-name">${item.name} x ${item.quantity}</span>
+                            <span class="item-price">₹${itemTotal.toFixed(2)}</span>
+                        </li>
+                    `;
+                    orderSummaryList.innerHTML += listItem;
+                });
+
+                const shippingCost = SHIPPING_RATE;
+                const total = subtotal + shippingCost;
+
+                summarySubtotal.textContent = `₹${subtotal.toFixed(2)}`;
+                summaryShipping.textContent = `₹${shippingCost.toFixed(2)}`;
+                summaryTotal.textContent = `₹${total.toFixed(2)}`;
+            }
+
+            // Toggle shipping address fields
+            sameAsBillingCheckbox.addEventListener('change', function () {
+                if (this.checked) {
+                    shippingAddressFields.style.display = 'none';
+                    // Remove 'required' attribute from shipping fields when hidden
+                    shippingAddressFields.querySelectorAll('input, select').forEach(field => {
+                        field.removeAttribute('required');
+                    });
+                } else {
+                    shippingAddressFields.style.display = 'block';
+                    // Add 'required' attribute back to shipping fields when shown
+                    shippingAddressFields.querySelectorAll('input, select').forEach(field => {
+                        if (!field.classList.contains('optional')) { // Add a class 'optional' to fields that should never be required
+                            field.setAttribute('required', 'required');
+                        }
+                    });
+                    // Explicitly make Address Line 2 optional if needed, as it was in billing
+                    document.getElementById('shippingAddress2').removeAttribute('required');
+                }
+            });
+
+            // Show/hide payment details based on selection
+            function showPaymentDetails(method) {
+                for (const key in paymentDetailsCards) {
+                    paymentDetailsCards[key].style.display = 'none';
+                    // Remove required attributes from hidden payment fields
+                    paymentDetailsCards[key].querySelectorAll('input').forEach(field => {
+                        field.removeAttribute('required');
+                    });
+                }
+                if (paymentDetailsCards[method]) {
+                    paymentDetailsCards[method].style.display = 'block';
+                    // Add required attributes to visible payment fields
+                    paymentDetailsCards[method].querySelectorAll('input').forEach(field => {
+                        field.setAttribute('required', 'required');
+                    });
+                }
+            }
+
+            paymentMethodRadios.forEach(radio => {
+                radio.addEventListener('change', function () {
+                    showPaymentDetails(this.value);
+                });
+            });
+
+            // Initial display of payment details (based on default checked radio)
+            showPaymentDetails(document.querySelector('input[name="paymentMethod"]:checked').value);
+
+            // Bootstrap form validation
+            checkoutForm.addEventListener('submit', function (event) {
+                if (!checkoutForm.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+
+                // Custom validation for phone number and zip code if not handled by pattern
+                const billingPhone = document.getElementById('billingPhone');
+                const billingZip = document.getElementById('billingZip');
+                const shippingZip = document.getElementById('shippingZip'); // If separate shipping is enabled
+
+                if (!billingPhone.value.match(/^[0-9]{10}$/)) {
+                    billingPhone.setCustomValidity('Please enter a valid 10-digit phone number.');
+                } else {
+                    billingPhone.setCustomValidity('');
+                }
+
+                if (!billingZip.value.match(/^[0-9]{6}$/)) {
+                    billingZip.setCustomValidity('Please enter a valid 6-digit zip code.');
+                } else {
+                    billingZip.setCustomValidity('');
+                }
+
+                if (shippingAddressFields.style.display !== 'none' && shippingZip.value && !shippingZip.value.match(/^[0-9]{6}$/)) {
+                    shippingZip.setCustomValidity('Please enter a valid 6-digit zip code for shipping.');
+                } else if (shippingAddressFields.style.display !== 'none') {
+                    shippingZip.setCustomValidity('');
+                }
+
+
+                checkoutForm.classList.add('was-validated');
+
+                if (checkoutForm.checkValidity()) {
+                    // If form is valid, proceed with order (e.g., send data to server)
+                    alert('Order placed successfully! (This is a demo)');
+                    // Clear cart after successful order (optional)
+                    localStorage.removeItem('cart');
+                    updateNavbarCartCount();
+                    updateOrderSummary();
+                    // Optionally redirect to an order confirmation page
+                    // window.location.href = 'order-confirmation.html';
+                }
+            }, false);
+
+            // Initial calls on page load
+            updateNavbarCartCount();
+            updateOrderSummary();
+        });
+    </script> -->
+<style>
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+        overflow-x: hidden;
+    }
+
+    /* Sticky Navigation Bar */
+    .navbar {
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar-brand img {
+        height: 40px;
+    }
+
+    .nav-link {
+        font-weight: 500;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #007bff;
+    }
+
+    /* Checkout Section */
+    .checkout-section {
+        padding: 60px 0;
+    }
+
+    .checkout-header {
+        font-weight: 700;
+        margin-bottom: 40px;
+        text-align: center;
+        color: #007bff;
+    }
+
+    /* Form Card Styling */
+    .form-card {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+        margin-bottom: 30px;
+    }
+
+    .form-card h5 {
+        font-weight: 600;
+        margin-bottom: 25px;
+        color: #343a40;
+        border-bottom: 1px solid #e9ecef;
+        padding-bottom: 15px;
+    }
+
+    .form-floating>.form-control,
+    .form-floating>.form-control-plaintext,
+    .form-floating>.form-select {
+        padding: 1rem 0.75rem;
+        height: calc(3.5rem + 2px);
+        border-radius: 0.5rem;
+    }
+
+    .form-floating>label {
+        padding: 1rem 0.75rem;
+        color: #6c757d;
+    }
+
+    .form-control:focus {
+        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        border-color: #007bff;
+    }
+
+    .form-check-input:checked {
+        background-color: #007bff;
+        border-color: #007bff;
+    }
+
+    /* Order Summary */
+    .order-summary {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        padding: 30px;
+    }
+
+    .order-summary h5 {
+        font-weight: 600;
+        margin-bottom: 25px;
+        color: #343a40;
+        border-bottom: 1px solid #e9ecef;
+        padding-bottom: 15px;
+    }
+
+    .order-summary .list-group-item {
+        background-color: transparent;
+        border: none;
+        padding: 8px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .order-summary .item-name {
+        font-weight: 500;
+        color: #555;
+    }
+
+    .order-summary .item-price {
+        font-weight: 600;
+        color: #343a40;
+    }
+
+    .order-summary .subtotal,
+    .order-summary .shipping,
+    .order-summary .total {
+        font-size: 1.1rem;
+        font-weight: 600;
+        margin-top: 15px;
+        padding-top: 15px;
+        border-top: 1px solid #e9ecef;
+    }
+
+    .order-summary .total {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: #007bff;
+    }
+
+    .btn-place-order {
+        background-color: #28a745;
+        border-color: #28a745;
+        padding: 15px 30px;
+        font-size: 1.2rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .btn-place-order:hover {
+        background-color: #218838;
+        border-color: #218838;
+        transform: translateY(-3px);
+    }
+
+    /* Payment Options */
+    .payment-options .form-check {
+        margin-bottom: 15px;
+    }
+
+    .payment-options .form-check-label {
+        font-weight: 500;
+        color: #343a40;
+        cursor: pointer;
+    }
+
+    .payment-options .form-check-input {
+        margin-top: 0.3em;
+        margin-right: 0.5em;
+    }
+
+    .payment-details-card {
+        background-color: #f1f7fe;
+        /* Light blue background */
+        border: 1px solid #cfe2ff;
+        border-radius: 8px;
+        padding: 20px;
+        margin-top: 15px;
+        display: none;
+        /* Hidden by default */
+    }
+
+    /* Footer */
+    .footer {
+        background-color: #343a40;
+        color: #f8f9fa;
+        padding: 50px 0;
+        font-size: 0.9rem;
+        margin-top: 50px;
+    }
+
+    .footer h5 {
+        color: #ffffff;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .footer ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer ul li a {
+        color: #adb5bd;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer ul li a:hover {
+        color: #007bff;
+    }
+
+    .footer .social-icons a {
+        color: #f8f9fa;
+        font-size: 1.5rem;
+        margin-right: 15px;
+        transition: color 0.3s ease;
+    }
+
+    .footer .social-icons a:hover {
+        color: #007bff;
+    }
+
+    .footer .bottom-bar {
+        border-top: 1px solid #495057;
+        padding-top: 20px;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    .active-page {
+        font-weight: bold;
+        color: #007bff;
+    }
+
+    /* Default desktop layout — form left, summary right */
+    #checkoutRow {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    /* Mobile layout — summary on top */
+    @media (max-width: 767.98px) {
+        #checkoutRow {
+            flex-direction: column;
+        }
+
+        #orderSummary {
+            order: -1;
+            /* Move summary above the form */
+            margin-bottom: 1.5rem;
+        }
+
+        #checkoutForm {
+            order: 0;
+        }
+    }
+</style>
+
+<script>
+    // Bootstrap 5 form validation
+    (() => {
+        'use strict'
+        const forms = document.querySelectorAll('.needs-validation')
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault()
+                    event.stopPropagation()
+                }
+                form.classList.add('was-validated')
+            }, false)
+        })
+    })()
+</script>
+
+{% endblock %}

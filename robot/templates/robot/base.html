@@ -1,0 +1,273 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}RoboSTEMia - Robotics & STEM Education{% endblock %}</title>
+
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="India's leading robotics and STEM training center offering hands-on learning, project support, and expert mentorship">
+    <meta name="keywords" content="robotics, STEM education, electronics kits, mechanical parts, Arduino, Raspberry Pi">
+    <meta name="author" content="RoboSTEMia">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="RoboSTEMia - Robotics & STEM Education">
+    <meta property="og:description" content="India's leading robotics and STEM training center">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% static 'robot/logof.png' %}">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="{% static 'robot/web_fab.png' %}">
+    
+    <!-- CSS (unchanged) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "RoboSTEMia",
+        "url": "{{ request.build_absolute_uri }}",
+        "logo": "{% static 'robot/logof.png' %}",
+        "sameAs": [
+            "https://www.youtube.com/@RoboSTEMia-S"
+        ],
+        "contactPoint": {
+            "@type": "ContactPoint",
+            "telephone": "+91-6291442516",
+            "email": "robostemia@gmail.com",
+            "contactType": "customer service"
+        }
+    }
+    </script>
+    
+    <style>
+        /* Your existing styles remain completely unchanged */
+        .nav-link1,
+        .nav-link1.dropdown-toggle1 {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 500;
+        padding: 8px 20px;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        text-align: center;
+        }
+        /* LOGIN BUTTON (when not logged in) */
+        .nav-link1 {
+        background: linear-gradient(135deg, #0d6efd, #458bff);
+        color: #fff !important;
+        box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+        border: none;
+        }
+        .nav-link11 {
+        margin-top: 10px;
+        }
+        .nav-link1:hover {
+        background: linear-gradient(135deg, #0b5ed7, #337fe6);
+        transform: translateY(-2px);
+        }
+        /* USER DROPDOWN TOGGLE (when logged in) */
+        .nav-item1.dropdown1 .nav-link1.dropdown1-toggle1 {
+        background-color: rgba(13, 110, 253, 0.1);
+        color: #0d6efd !important;
+        }
+        .nav-item1.dropdown1 .nav-link1.dropdown1-toggle1:hover {
+        background-color: rgba(13, 110, 253, 0.15);
+        transform: translateY(-1px);
+        }
+        /* Dropdown menu */
+        .dropdown1-menu {
+        border-radius: 12px;
+        padding: 10px 0;
+        border: none;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        animation: dropdownFade 0.25s ease-out;
+        }
+        /* Dropdown links */
+        .dropdown1-item {
+        font-weight: 500;
+        padding: 10px 20px;
+        color: #333;
+        }
+        .dropdown1-item:hover {
+        background-color: #f0f8ff;
+        color: #0d6efd;
+        }
+        /* Dropdown animation */
+        @keyframes dropdownFade {
+        from {
+        opacity: 0;
+        transform: translateY(-8px);
+        }
+        to {
+        opacity: 1;
+        transform: translateY(0);
+        }
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    
+    <!-- Skip link for accessibility -->
+    <a href="#main-content" class="visually-hidden-focusable">Skip to content</a>
+    
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+            <img src="{% static '/robot/logof.png' %}" alt="RoboSTEMia Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="con collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <!-- Nav links -->
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/' %}active-page{% endif %}" href="/">Home{% if request.path == '/' %} :{% endif %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/shop/' %}active-page{% endif %}" href="/shop/">Shop{% if request.path == '/shop/' %} :{% endif %}</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/services/' %}active-page{% endif %}" href="/services/">Services{% if request.path == '/services/' %} :{% endif %}</a>
+                    </li> -->
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/advisorycommittee/' %}active-page{% endif %}" href="/advisorycommittee/">Committee-Members{% if request.path == '/advisorycommittee/' %} :{% endif %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/order-tracking/' %}active-page{% endif %}" href="/order-tracking/">Order-Track{% if request.path == '/order-tracking/' %} :{% endif %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/about/' %}active-page{% endif %}" href="/about/">About{% if request.path == '/about/' %} :{% endif %}</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/contact/' %}active-page{% endif %}" href="/contact/">Contact{% if request.path == '/contact/' %} :{% endif %}</a>
+                    </li>
+                    {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.path == '/your-cart/' %}active-page{% endif %}" href="/your-cart/">
+                        <i class="fas fa-shopping-cart"></i> Cart{% if request.path == '/your-cart/' %} :{% endif %}
+                        <span class="badge bg-primary ms-1" id="cartCount">0</span>
+                        </a>
+                    </li>
+                    {% endif %}
+                    <!-- User authentication section -->
+                    {% if user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="fa-solid fa-user me-2" style="color: #0011ff;"></i>
+                        <span style="color: #002966;">{{ user.username }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                            <li><a class="dropdown-item" href="#">Profile</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                        </ul>
+                    </li>
+                    {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link d-flex align-items-center" href="{% url 'login' %}">
+                        <i class="fa-solid fa-user me-2" style="color: #0011ff;"></i>
+                        <span class="text-blue">Login</span>
+                        </a>
+                    </li>
+                    <li class="nav-item"></li>
+                    <a class="nav-link d-flex align-items-center" href="{% url 'register' %}">
+                    <i class="fa-solid fa-user me-2" style="color: #db892b;"></i>
+                    <span class="text-blue">Register</span>
+                    </a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main id="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4 mb-md-0">
+                    <h5>About Us</h5>
+                    <p>We are dedicated to providing the best products and customer service. Shop with confidence!</p>
+                    <div class="social-icons mt-3">
+                        <a href="https://www.facebook.com/people/Robostemia/61577539023886/" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.youtube.com/@RoboSTEMia-S" target="_blank"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/shop/">Shop</a></li>
+                        <li><a href="/services/">Services</a></li>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                        <!-- <li><a href="/your-cart/">Privacy Policy</a></li> -->
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0" >
+                    <h5>Categories</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="/shop/?category=Electronic%20Kit&sort_by=popularity">Electronics Kit</a></li>
+                        <li><a href="/shop/?category=Electronics&sort_by=popularity">Electronics</a></li>
+                        <li><a href="/shop/?category=Mechanical%20Parts&sort_by=popularity">Mechanical Parts</a></li>
+                        <li><a href="/shop/?category=Module&sort_by=popularity">Module</a></li>
+                        <li><a href="/shop/?category=Wires%20and%20Cables&sort_by=popularity">Wires and Cables</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact Info</h5>
+                    <p><i class="fas fa-phone"></i> Mobile: 6291442516</p>
+                    <p><i class="fas fa-envelope"></i> robostemia@gmail.com</p>
+                </div>
+            </div>
+            <div class="row bottom-bar">
+                <div class="col-12">
+                    <p class="mb-0">&copy; 2025 robostemia. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    
+    {% if user.is_authenticated %}
+    <ul id="cart-items" style="display:none;">
+        {% for item in user.usercartitem_set.all %}
+        <li data-quantity="{{ item.product_count }}"></li>
+        {% endfor %}
+    </ul>
+    <script>
+        const items = document.querySelectorAll('#cart-items li');
+        let total = 0;
+        items.forEach(item => {
+            total += parseInt(item.dataset.quantity || 0);
+        });
+        document.getElementById('cartCount').textContent = total;
+    </script>
+    {% endif %}
+</body>
+</html>

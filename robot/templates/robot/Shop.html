@@ -1,0 +1,555 @@
+{% extends "robot/base.html" %}
+{% block title %}Shop - MyShop{% endblock %}
+
+{% block content %}
+<section class="container shop-section">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="filter-sidebar">
+                <h5>Categories</h5>
+                <div class="list-group list-group-flush mb-4">
+                    <a href="{% url 'shop' %}" class="list-group-item list-group-item-action {% if not selected_category %}active{% endif %}">All Categories</a>
+                    {% for category in categories %}
+                    <a href="{% url 'shop' %}?category={{ category }}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}" class="list-group-item list-group-item-action {% if selected_category == category %}active{% endif %}">{{ category }}</a>
+                    {% endfor %}
+                </div>
+
+
+            </div>
+        </div>
+
+        <div class="col-lg-9">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h3>All Products {% if selected_category %}<small class="text-muted">({{ selected_category }})</small>{% endif %}</h3>
+                <div class="dropdown sort-dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                        Sort by:
+                        {% if sort_by == 'price_asc' %}Price: Low to High
+                        {% elif sort_by == 'price_desc' %}Price: High to Low
+                        {% elif sort_by == 'newest' %}Newest Arrivals
+                        {% else %}Popularity
+                        {% endif %}
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                        <li><a class="dropdown-item" href="{% url 'shop' %}?sort_by=popularity{% if selected_category %}&category={{ selected_category }}{% endif %}">Popularity</a></li>
+                        <li><a class="dropdown-item" href="{% url 'shop' %}?sort_by=price_asc{% if selected_category %}&category={{ selected_category }}{% endif %}">Price: Low to High</a></li>
+                        <li><a class="dropdown-item" href="{% url 'shop' %}?sort_by=price_desc{% if selected_category %}&category={{ selected_category }}{% endif %}">Price: High to Low</a></li>
+                        <li><a class="dropdown-item" href="{% url 'shop' %}?sort_by=newest{% if selected_category %}&category={{ selected_category }}{% endif %}">Newest Arrivals</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-2 row-cols-lg-3 g-4">
+                {% for product in products %}
+                <div class="col">
+                    <div class="card product-card">
+
+
+
+                        {% if product.image1 %}
+                        <img src="{{ product.image1.url }}" class="card-img-top" alt="{{ product.name }}">
+                        {% elif product.image2 %}
+                        <img src="{{ product.image2.url }}" class="card-img-top" alt="{{ product.name }}">
+                        {% elif product.image3 %}
+                        <img src="{{ product.image3.url }}" class="card-img-top" alt="{{ product.name }}">
+                        {% elif product.image4 %}
+                        <img src="{{ product.image4.url }}" class="card-img-top" alt="{{ product.name }}">
+                        {%else%}
+                        <img src="https://via.placeholder.com/400x300?text=No+Image" class="card-img-top" alt="No Image">
+                        {% endif %}
+                        <div class="card-body">
+                            <p class="card-title">{{ product.name }}</p>
+                            <p class="card-text price">₹{{ product.price|floatformat:0 }}</p>
+                            <a class="btn btn-primary" href="/product-detail/{{ product.id}}/">Check Now</a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12">
+                    <p class="text-center">No products found in this category.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <nav aria-label="Page navigation example" class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if products.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.previous_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                    </li>
+                    {% endif %}
+
+                    {% for i in products.paginator.page_range %}
+                    <li class="page-item {% if products.number == i %}active{% endif %}">
+                        <a class="page-link" href="?page={{ i }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">{{ i }}</a>
+                    </li>
+                    {% endfor %}
+
+                    {% if products.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ products.next_page_number }}{% if selected_category %}&category={{ selected_category }}{% endif %}{% if sort_by %}&sort_by={{ sort_by }}{% endif %}">Next</a>
+                    </li>
+                    {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </div>
+</section>
+
+<style>
+    /* Ensure html and body don't cause horizontal scroll */
+    html,
+    body {
+        overflow-x: hidden;
+        /* Main fix for horizontal scrollbar */
+        width: 100%;
+        /* Ensure body doesn't try to be wider than viewport */
+        margin: 0;
+        /* Remove default body margin */
+        padding: 0;
+        /* Remove default body padding */
+        font-family: 'Poppins', sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    /* Universal box-sizing and min-width to prevent overflow */
+    *,
+    *::before,
+    *::after {
+        box-sizing: border-box;
+        /* Added to prevent elements from implicitly creating min-width larger than viewport */
+        min-width: 0;
+    }
+
+    /* General rule for images to prevent them from overflowing their containers */
+    img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        /* Removes extra space below images */
+    }
+
+    /* Sticky Navigation Bar */
+    .navbar {
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar-brand img {
+        height: 40px;
+        max-width: 100%;
+        /* Ensure logo scales down properly */
+    }
+
+    .nav-link {
+        font-weight: 500;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #007bff;
+    }
+
+    /* Remove outline on navbar toggler button when focused for better aesthetics */
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+
+    /* Ensure Bootstrap containers and rows are fully contained */
+    .container,
+    .container-fluid {
+        overflow: hidden;
+        /* Prevents children from spilling out horizontally */
+    }
+
+    .row {
+        /* Ensure rows behave correctly and don't cause overflow with their negative margins */
+        margin-right: calc(-.5 * var(--bs-gutter-x));
+        margin-left: calc(-.5 * var(--bs-gutter-x));
+        width: calc(100% + var(--bs-gutter-x));
+        /* Explicitly set width to account for negative margins */
+        overflow: hidden;
+        /* Another layer of defense against child overflow */
+    }
+
+    /* Shop Section */
+    .shop-section {
+        padding: 50px 0;
+    }
+
+    /* Sidebar Filters */
+    .filter-sidebar {
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        padding: 25px;
+        margin-bottom: 30px;
+        /* Space below sidebar on smaller screens when it stacks */
+    }
+
+    .filter-sidebar h5 {
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #007bff;
+    }
+
+    .filter-sidebar .list-group-item {
+        border: none;
+        padding: 8px 0;
+        background-color: transparent;
+        font-weight: 400;
+        color: #555;
+        transition: color 0.2s ease;
+    }
+
+    .filter-sidebar .list-group-item:hover,
+    .filter-sidebar .list-group-item.active {
+        /* Added active state styling */
+        color: #007bff;
+        background-color: #e9ecef;
+        /* Light background for active item */
+        cursor: pointer;
+    }
+
+    .filter-sidebar .form-label {
+        font-weight: 500;
+        margin-top: 15px;
+        margin-bottom: 10px;
+    }
+
+    /* Ensure range inputs are fully responsive */
+    input[type="range"] {
+        width: 100%;
+    }
+
+
+    /* Product Card */
+    .product-card {
+            height: 413px;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        overflow: hidden;
+        background-color: #ffffff;
+    }
+
+    .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card img {
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        height: 220px;
+        object-fit: cover;
+        width: 100%;
+    }
+
+    .product-card .card-body {
+        padding: 20px;
+        text-align: center;
+     
+    }
+    .product-card .card-body p {
+        overflow: hidden;
+           height: 45px;
+        text-overflow:ellipsis;
+    }
+    .product-card .card-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #343a40;
+        margin-bottom: 8px;
+    }
+
+    .product-card .card-text.price {
+        font-size: 1.1rem;
+        color: #007bff;
+        font-weight: 700;
+        margin-bottom: 15px;
+    }
+
+    .product-card .btn {
+        width: 100%;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+    .product-card .btn:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    /* Sorting Dropdown */
+    .sort-dropdown .dropdown-toggle {
+        background-color: #fff;
+        border: 1px solid #ced4da;
+        color: #343a40;
+        border-radius: 0.5rem;
+        padding: 0.5rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .sort-dropdown .dropdown-toggle:hover {
+        background-color: #f1f1f1;
+        border-color: #007bff;
+    }
+
+    .sort-dropdown .dropdown-menu {
+        border-radius: 0.5rem;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .sort-dropdown .dropdown-item {
+        font-weight: 500;
+        color: #343a40;
+        transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    .sort-dropdown .dropdown-item:hover {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    /* Pagination */
+    .pagination .page-link {
+        color: #007bff;
+        border-color: #dee2e6;
+        transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+    }
+
+    .pagination .page-link:hover {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #fff;
+    }
+
+    /* Footer */
+    .footer {
+        background-color: #343a40;
+        color: #f8f9fa;
+        padding: 50px 0;
+        font-size: 0.9rem;
+    }
+
+    .footer h5 {
+        color: #ffffff;
+        font-weight: 600;
+        margin-bottom: 20px;
+    }
+
+    .footer ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer ul li a {
+        color: #adb5bd;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer ul li a:hover {
+        color: #007bff;
+    }
+
+    .footer .social-icons a {
+        color: #f8f9fa;
+        font-size: 1.5rem;
+        margin-right: 15px;
+        transition: color 0.3s ease;
+    }
+
+    .footer .social-icons a:hover {
+        color: #007bff;
+    }
+
+    .footer .bottom-bar {
+        border-top: 1px solid #495057;
+        padding-top: 20px;
+        margin-top: 30px;
+        text-align: center;
+    }
+
+    /* ========================================= */
+    /* Responsive Media Queries (CSS Only) */
+    /* ========================================= */
+
+    /* Extra small devices (portrait phones, less than 576px) */
+    @media (max-width: 575.98px) {
+        .shop-section {
+            padding: 20px 18px;
+            /* Reduce section padding */
+        }
+
+        .filter-sidebar {
+            padding: 15px;
+            /* Reduce sidebar padding */
+            margin-bottom: 20px;
+            /* Ensure space below sidebar when it stacks */
+        }
+
+        .filter-sidebar h5 {
+            margin-bottom: 10px;
+        }
+
+        .product-card .card-title {
+            font-size: 1rem;
+            /* Smaller product title */
+        }
+
+        .product-card .card-text.price {
+            font-size: 0.9rem;
+            /* Smaller price font */
+        }
+
+        .product-card .card-body {
+            padding: 15px;
+            /* Smaller product card body padding */
+        }
+
+        /* Make product cards stack nicely on extra small screens */
+        .row-cols-1>* {
+            flex: 0 0 100%;
+            max-width: 100%;
+        }
+
+        .footer {
+            padding: 20px 0;
+            /* Reduce footer padding */
+            font-size: 0.75rem;
+            /* Smaller font for footer text */
+        }
+
+        .footer h5 {
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .footer .social-icons a {
+            font-size: 1.2rem;
+            /* Smaller social icons */
+            margin-right: 8px;
+        }
+
+        .footer .bottom-bar {
+            padding-top: 10px;
+            margin-top: 15px;
+        }
+
+        /* Adjust sorting dropdown for small screens */
+        .d-flex.justify-content-between.align-items-center.mb-4 {
+            flex-direction: column;
+            /* Stack elements vertically */
+            align-items: flex-start !important;
+            /* Align to start */
+            margin-bottom: 20px !important;
+        }
+
+        .d-flex.justify-content-between.align-items-center.mb-4 h3 {
+            margin-bottom: 10px;
+            /* Space between title and dropdown */
+            font-size: 1.5rem;
+        }
+
+        .sort-dropdown {
+            width: 100%;
+            /* Make dropdown full width */
+        }
+
+        .sort-dropdown .dropdown-toggle {
+            width: 100%;
+        }
+    }
+
+    /* Small devices (landscape phones, 576px and up) */
+    @media (min-width: 576px) and (max-width: 767.98px) {
+        .shop-section {
+            padding: 30px 15px;
+        }
+
+        .filter-sidebar {
+            margin-bottom: 30px;
+            /* More space for sidebar on tablets */
+        }
+
+        /* Ensure product cards are 2 per row */
+        .row-cols-sm-2>* {
+            /* Changed from md-2 to sm-2 for landscape phones */
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+
+        /* Adjust sorting dropdown for small tablets */
+        .d-flex.justify-content-between.align-items-center.mb-4 {
+            flex-direction: row;
+            /* Keep elements inline */
+            align-items: center !important;
+            /* Keep aligned */
+        }
+
+        .d-flex.justify-content-between.align-items-center.mb-4 h3 {
+            margin-bottom: 0;
+        }
+
+        .sort-dropdown {
+            width: auto;
+            /* Reset width for larger screens */
+        }
+    }
+
+    /* Medium devices (tablets, 768px and up) */
+    @media (min-width: 768px) and (max-width: 991.98px) {
+        .shop-section {
+            padding: 40px 18px;
+        }
+
+        /* Ensure product cards are 2 per row on medium screens */
+        .row-cols-md-2>* {
+            /* Explicitly set for md breakpoint */
+            flex: 0 0 50%;
+            max-width: 50%;
+        }
+    }
+
+    /* Large devices (desktops, 992px and up) and extra large devices (1200px and up)
+            No specific large changes needed, as the base CSS is typically for larger screens.
+            These breakpoints are primarily for fine-tuning if needed. */
+    @media (min-width: 992px) {
+
+        /* Reset product card grid for larger screens to 3 per row */
+        .row-cols-lg-3>* {
+            flex: 0 0 33.333333%;
+            max-width: 33.333333%;
+        }
+    }
+        .active-page {
+    font-weight: bold;
+    color: #007bff;
+    }
+    .nav-item.dropdown{
+        position: static;
+    
+    }
+        .nav-item.dropdown ul{
+    
+        margin-right: 33px;
+    }
+</style>
+{% endblock %}

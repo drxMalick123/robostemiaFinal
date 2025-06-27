@@ -1,0 +1,714 @@
+{% extends "robot/base.html" %}
+{% block title %}Services - MyShop{% endblock %}
+
+{% block content %}
+
+
+<main>
+    <section id="hero" class="hero-section d-flex align-items-center">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-10 col-xl-9">
+                    <h1>Pioneering Innovation for a Smarter Future</h1>
+                    <p>Your comprehensive partner for cutting-edge technology solutions, from expert education to
+                        advanced AI and IoT integration, driving your success in the digital age.</p>
+                    <a href="#contact" class="btn btn-primary-custom">Schedule Consultation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="services" class="services-section section-padding">
+        <div class="container">
+            <h2>Our Expertise, Your Advantage</h2>
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                {% for service in services %}
+                <div class="col d-flex">
+                    <div class="service-card flex-fill">
+                        <div class="icon-wrapper mx-auto">
+                            <img src="/media/{{ service.image_url }}" alt="{{ service.name }}" class="img-fluid">
+                        </div>
+                        <h3>{{ service.name }}</h3>
+                        <p style="line-break: anywhere;">{{ service.description }}</p>
+
+
+                        <a href="#" class="btn btn-outline-primary-custom" style="display: none;">Learn More</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- <section id="services" class="services-section section-padding">
+            <div class="container">
+                <h2>Our Expertise, Your Advantage</h2>
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    <div class="col d-flex">
+                        <div class="service-card flex-fill">
+                            <div class="icon-wrapper mx-auto">
+                                <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
+                            </div>
+                            <h3>Teaching & Tutoring</h3>
+                            <p>Unlock potential with personalized tech education. From programming basics to advanced concepts like AI and robotics, our expert tutors guide learners of all ages.</p>
+                            <a href="#" class="btn btn-outline-primary-custom">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+
+    <section id="about" class="section-padding" style= "display: none; background-color: var(--light-grey-bg); text-align: center;">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <h2 style="color: var(--primary-blue);">About InnovateTech</h2>
+                    <p class="lead" style="color: var(--text-color-dark);">
+                        At InnovateTech, we believe in the power of technology to transform lives and businesses. Our
+                        team of seasoned professionals is dedicated to delivering excellence across a diverse range of
+                        services, helping our clients navigate the complexities of the digital landscape with confidence
+                        and creativity.
+                    </p>
+                    <p style="color: var(--text-color-light);">
+                        From nurturing future tech leaders through personalized tutoring to deploying advanced AI
+                        solutions and custom robotic systems, we are committed to pushing the boundaries of innovation.
+                        Partner with us to build a smarter, more efficient, and more connected future.
+                    </p>
+                    <a href="#contact" class="btn btn-primary-custom mt-4">Connect With Us</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="section-padding" style="background-color: var(--white-bg); text-align: center;">
+        <div class="container">
+            <h2 style="color: var(--text-color-dark);">Get in Touch</h2>
+            <p class="lead" style="color: var(--text-color-dark); max-width: 700px; margin: 0 auto 3rem;">
+                Have a project in mind or need expert advice? Reach out to us. We're here to help you innovate and
+                succeed.
+            </p>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <form action="#" method="POST">
+                        <div class="mb-3">
+                            <label for="name" class="form-label visually-hidden">Your Name</label>
+                            <input type="text" class="form-control form-control-lg" id="name" placeholder="Your Name"
+                                aria-label="Your Name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label visually-hidden">Your Email</label>
+                            <input type="email" class="form-control form-control-lg" id="email" placeholder="Your Email"
+                                aria-label="Your Email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="subject" class="form-label visually-hidden">Subject</label>
+                            <input type="text" class="form-control form-control-lg" id="subject" placeholder="Subject"
+                                aria-label="Subject" required>
+                        </div>
+                        <div class="mb-4">
+                            <label for="message" class="form-label visually-hidden">Your Message</label>
+                            <textarea class="form-control form-control-lg" id="message" rows="5"
+                                placeholder="Your Message" aria-label="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary-custom">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" defer></script>
+<script defer>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Smooth scrolling for all internal anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    // Calculate offset for fixed navbar
+                    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                    const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                    const offsetPosition = elementPosition - navbarHeight - 20; // Added extra padding
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+
+                    // Close navbar on mobile after clicking a link
+                    const navbarCollapse = document.getElementById('navbarNav');
+                    if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                        const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+                        bsCollapse.hide();
+                    }
+                }
+            });
+        });
+
+        // Newsletter signup alert (basic functionality)
+        const newsletterForm = document.querySelector('.newsletter-form');
+        if (newsletterForm) {
+            newsletterForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                const emailInput = document.getElementById('newsletterEmail');
+                if (emailInput.value && emailInput.checkValidity()) {
+                    alert(`Thank you for subscribing, ${emailInput.value}!`);
+                    emailInput.value = ''; // Clear the input
+                } else {
+                    alert('Please enter a valid email address to subscribe.');
+                }
+            });
+        }
+
+        // Basic contact form submission alert
+        const contactForm = document.querySelector('#contact form');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function (e) {
+                e.preventDefault();
+                // In a real application, you'd send this data to a server
+                alert('Thank you for your message! We will get back to you shortly.');
+                contactForm.reset(); // Clear the form
+            });
+        }
+    });
+</script>
+<style>
+    
+  
+    /* Define CSS Variables for consistent color palette (based on original e-commerce theme) */
+    :root {
+        --primary-blue: #007bff;
+        /* Main blue accent */
+        --dark-blue-text: #0056b3;
+        /* Darker blue for headings */
+        --dark-grey-bg: #343a40;
+        /* Dark background for footer */
+        --light-grey-bg: #f8f9fa;
+        /* Light background for sections */
+        --white-bg: #ffffff;
+        /* White background for cards, navbar */
+        --text-color-dark: #333;
+        /* General dark text */
+        --text-color-light: #495057;
+        /* Lighter body text */
+        --text-color-muted: #6c757d;
+        /* Muted text */
+        --footer-text: #adb5bd;
+        /* Footer link text */
+    }
+
+    body {
+        font-family: 'Poppins', sans-serif;
+        background-color: var(--light-grey-bg);
+        color: var(--text-color-dark);
+        line-height: 1.6;
+        overflow-x: hidden;
+        /* Prevent horizontal scroll */
+    }
+
+    /* --- Global Styles --- */
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-weight: 700;
+        color: var(--text-color-dark);
+        /* Default heading color */
+    }
+
+    .section-padding {
+        padding: 6rem 0;
+        /* Consistent padding for sections */
+    }
+
+    .btn-primary-custom {
+        background-color: var(--primary-blue);
+        border-color: var(--primary-blue);
+        color: var(--white-bg);
+        padding: 0.9rem 2.5rem;
+        font-size: 1.1rem;
+        font-weight: 600;
+        border-radius: 50px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        /* Lighter shadow than previous */
+    }
+
+    .btn-primary-custom:hover {
+        background-color: var(--dark-blue-text);
+        border-color: var(--dark-blue-text);
+        transform: translateY(-3px);
+        box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+        /* Lighter shadow than previous */
+        color: var(--white-bg);
+    }
+
+    /* --- Navbar --- */
+  .navbar {
+        background-color: #ffffff;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    .navbar-brand img {
+        height: 40px;
+    }
+
+    .nav-link {
+        font-weight: 500;
+        color: #333;
+        transition: color 0.3s ease;
+    }
+
+    .nav-link:hover {
+        color: #007bff;
+    }
+    
+    .navbar-brand:hover {
+        color: var(--dark-blue-text) !important;
+    }
+    
+    .navbar-nav .nav-link {
+        /* font-weight: 500; */
+        /* color: var(--text-color-light); */
+        /* Matching the original nav-link color */
+        /* padding: 0.75rem 1.25rem; */
+        transition: color 0.3s ease;
+        /* No background change on hover, only color */
+        border-radius: 5px;
+        /* Keep for general consistency */
+    }
+    
+    .navbar-nav .nav-link:hover {
+        color: var(--primary-blue);
+        /* Matching the original nav-link hover color */
+        background-color: transparent;
+        /* Ensure no background tint */
+    }
+    
+    .navbar-toggler {
+        border: none;
+        outline: none;
+        padding: 0.25rem 0.75rem;
+    }
+    
+    .navbar-toggler:focus {
+        box-shadow: none;
+    }
+    
+    .navbar-brand img {
+        height: 40px;
+    }
+
+    
+    .active-page{
+          font-weight: bold;
+          color: #007bff;
+      }
+
+    /* --- Hero Section --- */
+    .hero-section {
+        background: linear-gradient(rgba(0, 123, 255, 0.219), rgba(0, 87, 179, 0.555)), url('https://picsum.photos/1920/1080?random=tech') no-repeat center center/cover;
+        color: var(--white-bg);
+        padding: 10rem 0;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        min-height: 90vh;
+        position: relative;
+    }
+
+    .hero-section h1 {
+        font-weight: 700;
+        /* Adjusted to 700 */
+        font-size: 3.5rem;
+        /* Adjusted for larger feel while maintaining prev theme's 'vibe' */
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        /* Softer shadow */
+        color: var(--white-bg);
+    }
+
+    .hero-section p {
+        font-size: 1.3rem;
+        /* Adjusted */
+        max-width: 900px;
+        margin: 0 auto 2.5rem;
+        /* Adjusted */
+        line-height: 1.6;
+        opacity: 0.95;
+        /* Slightly less opaque */
+    }
+
+    /* --- Services Section --- */
+    .services-section {
+        background-color: var(--white-bg);
+        /* Changed to white-bg */
+        text-align: center;
+    }
+
+    .services-section h2 {
+        color: var(--primary-blue);
+        /* Adjusted to primary blue */
+        font-size: 2.5rem;
+        /* Adjusted size */
+        margin-bottom: 3.5rem;
+        /* Adjusted */
+    }
+
+    .service-card {
+        background-color: var(--white-bg);
+        border: 1px solid #e0e0e0;
+        /* Added a subtle border back */
+        border-radius: 12px;
+        /* Slightly smaller radius */
+        padding: 2.5rem;
+        text-align: center;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        /* Lighter shadow */
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        /* Faster transition */
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+    .service-card:hover {
+        transform: translateY(-7px);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        /* Lighter shadow */
+    }
+
+    .service-card .icon-wrapper {
+        font-size: 3.5rem;
+        /* Adjusted size */
+        color: var(--primary-blue);
+        margin-bottom: 1.5rem;
+        width: 90px;
+        /* Adjusted size */
+        height: 90px;
+        /* Adjusted size */
+        background-color: rgba(0, 123, 255, 0.1);
+        /* Light tint of primary blue */
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: background-color 0.3s ease;
+    }
+
+    .service-card:hover .icon-wrapper {
+        background-color: rgba(0, 123, 255, 0.15);
+    }
+
+    .service-card h3 {
+        font-weight: 600;
+        /* Adjusted to 600 */
+        color: var(--dark-blue-text);
+        /* Consistent with original theme */
+        margin-bottom: 1rem;
+        font-size: 1.75rem;
+        /* Adjusted size */
+    }
+
+    .service-card p {
+        color: var(--text-color-muted);
+        /* Used muted text color */
+        margin-bottom: 1.5rem;
+        /* Adjusted */
+        flex-grow: 1;
+    }
+
+    .service-card .btn-outline-primary-custom {
+        color: var(--primary-blue);
+        border-color: var(--primary-blue);
+        background-color: transparent;
+        padding: 0.75rem 1.75rem;
+        font-weight: 500;
+        /* Adjusted to 500 */
+        border-radius: 50px;
+        transition: all 0.3s ease;
+    }
+
+    .service-card .btn-outline-primary-custom:hover {
+        background-color: var(--primary-blue);
+        color: var(--white-bg);
+        transform: translateY(-1px);
+    }
+
+    /* --- About Section --- */
+    #about {
+        background-color: var(--f8f9fa);
+        /* Light grey bg */
+    }
+
+    #about h2 {
+        color: var(--primary-blue);
+        /* Adjusted to primary blue */
+    }
+
+    #about .lead {
+        color: var(--text-color-dark);
+    }
+
+    #about p {
+        color: var(--text-color-light);
+        /* General text color */
+    }
+
+    /* --- Contact Section --- */
+    #contact {
+        background-color: var(--f8f9fa);
+        /* Light grey bg */
+    }
+
+    #contact h2 {
+        color: var(--dark-navy);
+        /* Darker heading for contrast */
+    }
+
+    #contact .lead {
+        color: var(--text-color-dark);
+    }
+
+    #contact .form-control-lg {
+        border-radius: 8px;
+        padding: 0.85rem 1.2rem;
+        border: 1px solid #ced4da;
+    }
+
+    #contact .form-control-lg::placeholder {
+        color: #6c757d;
+        opacity: 0.8;
+    }
+
+    #contact .form-control-lg:focus {
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+    }
+
+    .email_wirdth {
+        width: 100%;
+    }
+
+    /* --- Footer --- */
+    .footer {
+        background-color: var(--dark-grey-bg);
+        /* Original dark grey bg */
+        color: var(--footer-text);
+        /* Original footer text color */
+        padding: 3rem 0;
+        /* Adjusted padding to original */
+        font-size: 0.85rem;
+        /* Adjusted font size */
+    }
+
+    .footer h5 {
+        color: var(--white-bg);
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        /* Original margin */
+        font-size: 1.1rem;
+        /* Original font size */
+    }
+
+    .footer ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .footer ul li {
+        margin-bottom: 0.5rem;
+        /* Adjusted margin */
+    }
+
+    .footer ul li a {
+        color: var(--footer-text);
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    .footer ul li a:hover {
+        color: var(--primary-blue);
+    }
+
+    .footer .social-icons a {
+        color: var(--white-bg);
+        /* Original white color */
+        font-size: 1.3rem;
+        /* Original font size */
+        margin-right: 1rem;
+        /* Original margin */
+        transition: color 0.3s ease;
+        /* Removed transform */
+        display: inline-block;
+    }
+
+    .footer .social-icons a:hover {
+        color: var(--primary-blue);
+    }
+
+    .footer .newsletter-form .form-control {
+        background-color: rgba(255, 255, 255, 0.1);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        color: var(--white-bg);
+        border-radius: 5px;
+        /* Adjusted radius */
+        padding: 0.75rem 1rem;
+        /* Adjusted padding */
+    }
+
+    .footer .newsletter-form .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .footer .newsletter-form .form-control:focus {
+        background-color: rgba(255, 255, 255, 0.15);
+        border-color: var(--primary-blue);
+        /* Consistent focus color */
+        box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        color: var(--white-bg);
+    }
+
+    .footer .newsletter-form .btn-subscribe {
+        background-color: var(--primary-blue);
+        border-color: var(--primary-blue);
+        color: var(--white-bg);
+        font-weight: 500;
+        /* Adjusted font-weight */
+        padding: 0.75rem 1.5rem;
+        /* Adjusted padding */
+        border-radius: 5px;
+        /* Adjusted radius */
+        transition: background-color 0.3s ease, border-color 0.3s ease;
+    }
+
+    .footer .newsletter-form .btn-subscribe:hover {
+        background-color: var(--dark-blue-text);
+        border-color: var(--dark-blue-text);
+    }
+
+    .footer .bottom-bar {
+        border-top: 1px solid #495057;
+        /* Original border color */
+        padding-top: 1.5rem;
+        /* Original padding */
+        margin-top: 2rem;
+        /* Original margin */
+        text-align: center;
+        color: #f8f9fa;
+        /* Original color */
+    }
+
+    /* --- Responsive Adjustments --- */
+    @media (max-width: 1200px) {
+        .hero-section h1 {
+            font-size: 3.5rem;
+        }
+
+        .hero-section p {
+            font-size: 1.2rem;
+        }
+    }
+
+    @media (max-width: 991.98px) {
+        .hero-section {
+            padding: 8rem 0;
+            min-height: 70vh;
+        }
+
+        .hero-section h1 {
+            font-size: 2.8rem;
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+        }
+
+        .services-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .service-card {
+            margin-bottom: 2rem;
+        }
+    }
+
+    @media (max-width: 767.98px) {
+        .hero-section {
+            padding: 6rem 0;
+            min-height: 60vh;
+        }
+
+        .hero-section h1 {
+            font-size: 2.2rem;
+        }
+
+        .hero-section p {
+            font-size: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn-primary-custom {
+            padding: 0.8rem 2rem;
+            font-size: 1rem;
+        }
+
+        .services-section {
+            padding: 4rem 0;
+        }
+
+        .services-section h2 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card {
+            padding: 1.5rem;
+        }
+
+        .service-card .icon-wrapper {
+            font-size: 3rem;
+            width: 75px;
+            height: 75px;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+        }
+
+        .footer {
+            padding: 2.5rem 0 1.5rem;
+        }
+
+        .footer h5 {
+            margin-bottom: 1rem;
+        }
+
+        .footer .newsletter-form .input-group {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .footer .newsletter-form .form-control {
+            margin-bottom: 10px;
+        }
+
+        .footer .newsletter-form .btn-subscribe {
+            width: 100%;
+        }
+    }
+
+</style>
+{% endblock %}

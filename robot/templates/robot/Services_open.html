@@ -1,0 +1,1208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Detailed information about our Robotics Solutions service: offering design, development, and integration of intelligent robotic systems.">
+    <title>Robotics Solutions - InnovateTech Services</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        /* Define CSS Variables for consistent color palette */
+        :root {
+            --primary-blue: #007bff;
+            --dark-blue-text: #0056b3;
+            --dark-grey-bg: #343a40;
+            --light-grey-bg: #f8f9fa;
+            --white-bg: #ffffff;
+            --text-color-dark: #333;
+            --text-color-light: #495057;
+            --text-color-muted: #6c757d;
+            --footer-text: #adb5bd;
+            --success-green: #28a745;
+            --warning-orange: #ffc107;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-grey-bg);
+            color: var(--text-color-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Global Styles --- */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-weight: 700;
+            color: var(--text-color-dark);
+        }
+
+        .section-padding {
+            padding: 5rem 0;
+        }
+
+        .text-primary-custom {
+            color: var(--primary-blue) !important;
+        }
+
+        .bg-primary-custom {
+            background-color: var(--primary-blue) !important;
+        }
+
+        .btn-primary-custom {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: var(--white-bg);
+            padding: 0.8rem 2.2rem;
+            font-size: 1.05rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-primary-custom:hover {
+            background-color: var(--dark-blue-text);
+            border-color: var(--dark-blue-text);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+        }
+
+        .btn-outline-primary-custom {
+            color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            background-color: transparent;
+            padding: 0.8rem 2.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary-custom:hover {
+            background-color: var(--primary-blue);
+            color: var(--white-bg);
+            transform: translateY(-2px);
+        }
+
+        /* --- Navbar (Reused from previous themes) --- */
+        .navbar {
+            background-color: var(--white-bg);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1020;
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: var(--primary-blue) !important;
+            font-size: 1.75rem;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-brand:hover {
+            color: var(--dark-blue-text) !important;
+        }
+
+        .navbar-nav .nav-link {
+            font-weight: 500;
+            color: var(--text-color-light);
+            padding: 0.75rem 1.25rem;
+            transition: color 0.3s ease;
+            border-radius: 5px;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--primary-blue);
+            background-color: transparent;
+        }
+
+        .navbar-toggler {
+            border: none;
+            outline: none;
+            padding: 0.25rem 0.75rem;
+        }
+
+        .navbar-toggler:focus {
+            box-shadow: none;
+        }
+
+        /* --- Hero Section --- */
+        .service-hero {
+            background-color: var(--white-bg);
+            padding: 4rem 0;
+            border-bottom: 1px solid #e9ecef;
+            text-align: center;
+        }
+
+        .service-hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--dark-blue-text);
+            margin-bottom: 1rem;
+        }
+
+        .service-hero .tagline {
+            font-size: 1.4rem;
+            color: var(--text-color-muted);
+            margin-bottom: 2rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .service-hero img {
+            max-width: 600px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            margin-top: 2.5rem;
+        }
+
+        /* --- Detail Sections --- */
+        .detail-section {
+            background-color: var(--white-bg);
+            padding: 4rem 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .detail-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 2.5rem;
+            text-align: center;
+        }
+
+        .detail-section h3 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--dark-blue-text);
+            margin-bottom: 1.5rem;
+        }
+
+        .detail-section p {
+            font-size: 1.05rem;
+            color: var(--text-color-light);
+            margin-bottom: 1rem;
+        }
+
+        .detail-section ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .detail-section ul li {
+            margin-bottom: 0.75rem;
+            font-size: 1rem;
+            color: var(--text-color-light);
+        }
+
+        .detail-section ul li i {
+            color: var(--success-green);
+            margin-right: 0.75rem;
+        }
+
+        /* --- Why Choose Us Section --- */
+        .why-choose-us {
+            background-color: var(--light-grey-bg);
+            text-align: center;
+        }
+
+        .why-choose-us .icon-box {
+            background-color: var(--white-bg);
+            border-radius: 12px;
+            padding: 2.5rem 1.5rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .why-choose-us .icon-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .why-choose-us .icon-box i {
+            font-size: 3.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1.25rem;
+        }
+
+        .why-choose-us .icon-box h4 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: var(--dark-blue-text);
+            margin-bottom: 0.75rem;
+        }
+
+        .why-choose-us .icon-box p {
+            font-size: 0.95rem;
+            color: var(--text-color-muted);
+            line-height: 1.5;
+        }
+
+        /* --- Pricing Section --- */
+        .pricing-section {
+            background-color: var(--white-bg);
+        }
+
+        .pricing-card {
+            background-color: var(--light-grey-bg);
+            border-radius: 12px;
+            padding: 2.5rem;
+            text-align: center;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pricing-card.highlighted {
+            background-color: var(--primary-blue);
+            color: var(--white-bg);
+            transform: scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card .price-header {
+            margin-bottom: 2rem;
+        }
+
+        .pricing-card h3 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 0.75rem;
+            color: var(--dark-blue-text);
+        }
+
+        .pricing-card.highlighted h3,
+        .pricing-card.highlighted .price-value,
+        .pricing-card.highlighted .price-period,
+        .pricing-card.highlighted .price-features li,
+        .pricing-card.highlighted .price-features li i {
+            color: var(--white-bg) !important;
+        }
+
+        .pricing-card .price-value {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--primary-blue);
+            line-height: 1;
+        }
+
+        .pricing-card .price-period {
+            font-size: 1rem;
+            color: var(--text-color-muted);
+            margin-top: 0.5rem;
+            display: block;
+        }
+
+        .pricing-card .price-features {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 2.5rem;
+        }
+
+        .pricing-card .price-features li {
+            font-size: 1rem;
+            color: var(--text-color-light);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .pricing-card .price-features li i {
+            margin-right: 0.75rem;
+            color: var(--success-green);
+        }
+
+        .pricing-card .btn {
+            width: 100%;
+            padding: 0.9rem 1.5rem;
+            font-size: 1.05rem;
+        }
+
+        .pricing-card.highlighted .btn-outline-primary-custom {
+            background-color: var(--white-bg);
+            color: var(--primary-blue);
+            border-color: var(--white-bg);
+        }
+
+        .pricing-card.highlighted .btn-outline-primary-custom:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            border-color: rgba(255, 255, 255, 0.9);
+            color: var(--primary-blue);
+        }
+
+
+        /* --- Testimonials Section --- */
+        .testimonials-section {
+            background-color: var(--light-grey-bg);
+            text-align: center;
+        }
+
+        .testimonial-card {
+            background-color: var(--white-bg);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.07);
+            margin: 0 1.5rem;
+            /* Space between cards in carousel */
+        }
+
+        .testimonial-card .quote-icon {
+            font-size: 2.5rem;
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .testimonial-card .testimonial-text {
+            font-style: italic;
+            font-size: 1.05rem;
+            color: var(--text-color-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .testimonial-card .client-name {
+            font-weight: 600;
+            color: var(--dark-blue-text);
+            margin-bottom: 0.25rem;
+            font-size: 1.1rem;
+        }
+
+        .testimonial-card .client-title {
+            font-size: 0.9rem;
+            color: var(--text-color-muted);
+        }
+
+        .testimonials-carousel .carousel-indicators [data-bs-target] {
+            background-color: var(--primary-blue);
+            opacity: 0.7;
+            height: 6px;
+            width: 30px;
+            border-radius: 3px;
+            margin-left: 0.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .testimonials-carousel .carousel-indicators .active {
+            opacity: 1;
+        }
+
+        .testimonials-carousel .carousel-control-prev,
+        .testimonials-carousel .carousel-control-next {
+            width: 5%;
+            /* Make controls smaller */
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .testimonials-carousel .carousel-control-prev:hover,
+        .testimonials-carousel .carousel-control-next:hover {
+            opacity: 1;
+        }
+
+
+        /* --- FAQs Section --- */
+        .faqs-section {
+            background-color: var(--white-bg);
+        }
+
+        .faqs-section .accordion-item {
+            border: 1px solid #e9ecef;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+            overflow: hidden;
+        }
+
+        .faqs-section .accordion-button {
+            font-weight: 600;
+            color: var(--dark-blue-text);
+            background-color: var(--light-grey-bg);
+            padding: 1.25rem 1.5rem;
+            border-radius: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        .faqs-section .accordion-button:not(.collapsed) {
+            color: var(--primary-blue);
+            background-color: #e7f1ff;
+            /* Lighter primary blue */
+            box-shadow: none;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+        }
+
+        .faqs-section .accordion-button:focus {
+            box-shadow: none;
+            border-color: var(--primary-blue);
+        }
+
+        .faqs-section .accordion-body {
+            padding: 1.5rem;
+            color: var(--text-color-light);
+            font-size: 0.95rem;
+            background-color: var(--white-bg);
+        }
+
+        /* --- Floating Contact Button --- */
+        .floating-contact-btn {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 1000;
+            background-color: var(--success-green);
+            color: var(--white-bg);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: none;
+            /* Ensure no default button border */
+        }
+
+        .floating-contact-btn:hover {
+            background-color: #218838;
+            /* Darker green */
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            color: var(--white-bg);
+        }
+
+        /* --- Footer (Reused from previous themes) --- */
+        .footer {
+            background-color: var(--dark-grey-bg);
+            color: var(--footer-text);
+            padding: 3rem 0;
+            font-size: 0.85rem;
+        }
+
+        .footer h5 {
+            color: var(--white-bg);
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer ul li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer ul li a {
+            color: var(--footer-text);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer ul li a:hover {
+            color: var(--primary-blue);
+        }
+
+        .footer .social-icons a {
+            color: var(--white-bg);
+            font-size: 1.3rem;
+            margin-right: 1rem;
+            transition: color 0.3s ease;
+            display: inline-block;
+        }
+
+        .footer .social-icons a:hover {
+            color: var(--primary-blue);
+        }
+
+        .footer .newsletter-form .form-control {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--white-bg);
+            border-radius: 5px;
+            padding: 0.75rem 1rem;
+        }
+
+        .footer .newsletter-form .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .footer .newsletter-form .form-control:focus {
+            background-color: rgba(255, 255, 255, 0.15);
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+            color: var(--white-bg);
+        }
+
+        .footer .newsletter-form .btn-subscribe {
+            background-color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            color: var(--white-bg);
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .footer .newsletter-form .btn-subscribe:hover {
+            background-color: var(--dark-blue-text);
+            border-color: var(--dark-blue-text);
+        }
+
+        .footer .bottom-bar {
+            border-top: 1px solid #495057;
+            padding-top: 1.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            color: #f8f9fa;
+        }
+
+        /* --- Responsive Adjustments --- */
+        @media (max-width: 991.98px) {
+            .service-hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .service-hero .tagline {
+                font-size: 1.2rem;
+            }
+
+            .detail-section h2,
+            .pricing-section h2,
+            .testimonials-section h2,
+            .faqs-section h2 {
+                font-size: 2rem;
+                margin-bottom: 2rem;
+            }
+
+            .pricing-card {
+                margin-bottom: 2rem;
+            }
+
+            .testimonials-carousel .carousel-indicators {
+                margin-bottom: 1rem;
+            }
+
+            .testimonials-carousel .carousel-control-prev,
+            .testimonials-carousel .carousel-control-next {
+                display: none;
+                /* Hide controls on smaller screens for cleaner look */
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .section-padding {
+                padding: 3rem 0;
+            }
+
+            .service-hero {
+                padding: 3rem 0;
+            }
+
+            .service-hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .service-hero .tagline {
+                font-size: 1rem;
+            }
+
+            .service-hero img {
+                max-width: 90%;
+            }
+
+            .detail-section h3 {
+                font-size: 1.5rem;
+            }
+
+            .why-choose-us .icon-box {
+                margin-bottom: 1.5rem;
+            }
+
+            .pricing-card {
+                padding: 2rem;
+            }
+
+            .pricing-card .price-value {
+                font-size: 3rem;
+            }
+
+            .testimonial-card {
+                padding: 1.5rem;
+                margin: 0 0.5rem;
+            }
+
+            .floating-contact-btn {
+                width: 50px;
+                height: 50px;
+                font-size: 1.5rem;
+                bottom: 20px;
+                right: 20px;
+            }
+
+            .footer {
+                padding: 2rem 0;
+            }
+
+            .footer h5 {
+                margin-bottom: 1rem;
+            }
+
+            .footer .newsletter-form .input-group {
+                flex-direction: column;
+            }
+
+            .footer .newsletter-form .form-control {
+                margin-bottom: 10px;
+            }
+
+            .footer .newsletter-form .btn-subscribe {
+                width: 100%;
+            }
+        }
+
+        .active-page {
+            font-weight: bold;
+            color: #007bff;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+                <a class="navbar-brand" href="index.html">InnovateTech</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#services">Services</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#about">About</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#contact">Contact</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <section class="service-hero">
+            <div class="container">
+                <div class="row align-items-center justify-content-center">
+                    <div class="col-lg-8">
+                        <h1>Robotics Solutions</h1>
+                        <p class="tagline">Innovate. Automate. Lead. Custom robotic systems designed for your specific
+                            challenges.</p>
+                    </div>
+                </div>
+                <div class="row justify-content-center mt-4">
+                    <div class="col-lg-8">
+                        <img src="https://picsum.photos/800/500?random=robotics"
+                            alt="Robotics Solutions Illustration: Robotic arm assembling parts" class="img-fluid">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="detail-section">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-10">
+                        <h2>What We Offer</h2>
+                        <p>At InnovateTech, our Robotics Solutions service is at the forefront of automation and
+                            intelligent systems. We provide comprehensive services from conceptual design to full-scale
+                            deployment of custom robotic solutions for various industries and applications.</p>
+                        <p>Our expertise spans across industrial automation, educational robotics, service robots, and
+                            innovative consumer robotics. We focus on creating efficient, reliable, and user-friendly
+                            robotic systems that enhance productivity and open new possibilities.</p>
+
+                        <h3 class="mt-5">Key Benefits</h3>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> Increased Efficiency &
+                                        Productivity</li>
+                                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> Enhanced Precision &
+                                        Quality Control</li>
+                                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> Cost Reduction through
+                                        Automation</li>
+                                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> Improved Safety in
+                                        Hazardous Environments</li>
+                                </ul>
+                            </div>
+                            <div class="col-md-6">
+                                <ul class="list-unstyled">
+                                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> Scalable & Adaptable
+                                        Solutions</li>
+                                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> Innovation & Competitive
+                                        Advantage</li>
+                                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> Custom-tailored to Your
+                                        Specific Needs</li>
+                                    <li><i class="fas fa-check-circle" aria-hidden="true"></i> Expert Support &
+                                        Maintenance</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3 class="mt-5">Technologies Involved</h3>
+                        <p>We leverage a wide array of advanced technologies and platforms to build robust robotic
+                            solutions:</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-cogs" aria-hidden="true"></i> **Robotics Operating System (ROS):** For
+                                flexible and modular robotic software development.</li>
+                            <li><i class="fas fa-robot" aria-hidden="true"></i> **Computer Vision:** Utilizing OpenCV
+                                and other libraries for object recognition, navigation, and quality inspection.</li>
+                            <li><i class="fas fa-microchip" aria-hidden="true"></i> **Embedded Systems:** Custom PCB
+                                design, microcontroller programming (Arduino, Raspberry Pi, ESP32).</li>
+                            <li><i class="fas fa-robot" aria-hidden="true"></i> **Actuators & Sensors:** Integration of
+                                various motors, grippers, distance sensors, IMUs, and cameras.</li>
+                            <li><i class="fas fa-chart-line" aria-hidden="true"></i> **AI & Machine Learning:** For
+                                intelligent decision-making, pattern recognition, and adaptive behaviors.</li>
+                            <li><i class="fas fa-puzzle-piece" aria-hidden="true"></i> **Simulation & Modeling:** Using
+                                tools like Gazebo and CoppeliaSim for virtual testing and optimization.</li>
+                            <li><i class="fas fa-cloud" aria-hidden="true"></i> **Cloud Robotics:** For distributed
+                                control, data processing, and remote management.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="why-choose-us section-padding">
+            <div class="container">
+                <h2 class="text-primary-custom">Why Choose InnovateTech for Robotics?</h2>
+                <div class="row mt-5 justify-content-center">
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="icon-box">
+                            <i class="fas fa-star" aria-hidden="true"></i>
+                            <h4>Expert Team</h4>
+                            <p>Our engineers and roboticists are industry veterans with deep knowledge and hands-on
+                                experience in cutting-edge robotics.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="icon-box">
+                            <i class="fas fa-lightbulb" aria-hidden="true"></i>
+                            <h4>Custom Innovation</h4>
+                            <p>We don't just provide solutions; we innovate. Every robotic system is custom-designed to
+                                meet your unique operational requirements.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="icon-box">
+                            <i class="fas fa-handshake" aria-hidden="true"></i>
+                            <h4>End-to-End Support</h4>
+                            <p>From initial consultation and design to deployment, training, and ongoing maintenance,
+                                we're with you every step of the way.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3 mb-4">
+                        <div class="icon-box">
+                            <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                            <h4>Reliability & Quality</h4>
+                            <p>We adhere to the highest standards of engineering excellence, ensuring robust, reliable,
+                                and high-quality robotic solutions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pricing-section section-padding">
+            <div class="container">
+                <h2 class="text-primary-custom">Flexible Robotics Packages</h2>
+                <div class="row mt-5 justify-content-center g-4">
+                    <div class="col-lg-4 col-md-6">
+                        <div class="pricing-card">
+                            <div class="price-header">
+                                <h3>Basic Automation</h3>
+                                <div class="price-value">₹2 Lakhs</div>
+                                <span class="price-period">starting price</span>
+                            </div>
+                            <ul class="price-features">
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Initial Consultation &
+                                    Feasibility</li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Basic Robotics Concept Design
+                                </li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Single-task Automation</li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Basic Hardware Prototyping
+                                </li>
+                                <li class="text-color-muted"><i class="fas fa-times-circle text-danger"
+                                        aria-hidden="true"></i> Advanced AI Integration</li>
+                                <li class="text-color-muted"><i class="fas fa-times-circle text-danger"
+                                        aria-hidden="true"></i> On-site Deployment & Training</li>
+                                <li class="text-color-muted"><i class="fas fa-times-circle text-danger"
+                                        aria-hidden="true"></i> 24/7 Priority Support</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-primary-custom">Request Quote</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="pricing-card highlighted">
+                            <div class="price-header">
+                                <h3>Advanced Robotics System</h3>
+                                <div class="price-value">₹7 Lakhs</div>
+                                <span class="price-period">starting price</span>
+                            </div>
+                            <ul class="price-features">
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Deep Dive Consultation &
+                                    Analysis</li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Custom Robotics System Design
+                                </li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Multi-task Automation &
+                                    Integration</li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Advanced Prototyping &
+                                    Testing</li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Basic AI/ML Integration</li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> On-site Deployment & Training
+                                </li>
+                                <li class="text-color-muted"><i class="fas fa-times-circle text-danger"
+                                        aria-hidden="true"></i> 24/7 Priority Support</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-primary-custom">Book a Demo</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-6">
+                        <div class="pricing-card">
+                            <div class="price-header">
+                                <h3>Full-Scale Automation Project</h3>
+                                <div class="price-value">₹15 Lakhs</div>
+                                <span class="price-period">starting price</span>
+                            </div>
+                            <ul class="price-features">
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Comprehensive Project
+                                    Management</li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Bespoke Robotics Solution &
+                                    Software</li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Complex System Integration
+                                </li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Advanced Hardware &
+                                    Manufacturing Support</li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Deep AI/ML & IoT Integration
+                                </li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> Full On-site Deployment &
+                                    Training</li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i> 24/7 Priority Support &
+                                    Maintenance</li>
+                            </ul>
+                            <a href="#" class="btn btn-outline-primary-custom">Request Custom Quote</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="testimonials-section section-padding">
+            <div class="container">
+                <h2 class="text-primary-custom">What Our Clients Say</h2>
+                <div id="testimonialCarousel" class="carousel slide testimonials-carousel" data-bs-ride="carousel"
+                    data-bs-interval="5000">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="Testimonial Slide 1"></button>
+                        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="1"
+                            aria-label="Testimonial Slide 2"></button>
+                        <button type="button" data-bs-target="#testimonialCarousel" data-bs-slide-to="2"
+                            aria-label="Testimonial Slide 3"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <div class="testimonial-card">
+                                        <i class="fas fa-quote-left quote-icon" aria-hidden="true"></i>
+                                        <p class="testimonial-text">"InnovateTech's robotics team delivered an automated
+                                            assembly line that exceeded our expectations. The efficiency gains are
+                                            remarkable, and their support has been exceptional."</p>
+                                        <p class="client-name">Anjali Verma</p>
+                                        <p class="client-title">Operations Director, Apex Manufacturing</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <div class="testimonial-card">
+                                        <i class="fas fa-quote-left quote-icon" aria-hidden="true"></i>
+                                        <p class="testimonial-text">"We commissioned a custom service robot for our
+                                            hospitality business, and InnovateTech delivered a robust, intelligent, and
+                                            user-friendly solution. Truly impressed!"</p>
+                                        <p class="client-name">Rahul Khanna</p>
+                                        <p class="client-title">CEO, Grand Resorts India</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-item">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-8">
+                                    <div class="testimonial-card">
+                                        <i class="fas fa-quote-left quote-icon" aria-hidden="true"></i>
+                                        <p class="testimonial-text">"Their rapid prototyping for our new drone concept
+                                            was instrumental. InnovateTech understood our vision and turned it into a
+                                            functional prototype faster than we thought possible."</p>
+                                        <p class="client-name">Dr. Vikram Singh</p>
+                                        <p class="client-title">Lead Engineer, AeroDynamics Research</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"
+                        data-bs-slide="prev" aria-label="Previous testimonial">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel"
+                        data-bs-slide="next" aria-label="Next testimonial">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <section class="faqs-section section-padding">
+            <div class="container">
+                <h2 class="text-primary-custom text-center">Frequently Asked Questions</h2>
+                <div class="row justify-content-center mt-5">
+                    <div class="col-lg-10">
+                        <div class="accordion" id="faqsAccordion">
+                            <div class="accordion-item">
+                                <h3 class="accordion-header" id="headingOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                        What types of robotic systems do you develop?
+                                    </button>
+                                </h3>
+                                <div id="collapseOne" class="accordion-collapse collapse show"
+                                    aria-labelledby="headingOne" data-bs-parent="#faqsAccordion">
+                                    <div class="accordion-body">
+                                        We develop a wide range of robotic systems including industrial robots for
+                                        manufacturing and automation, service robots for hospitality and healthcare,
+                                        educational robotics kits, and custom solutions for unique research or consumer
+                                        applications.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h3 class="accordion-header" id="headingTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                        What is your development process for a custom robot?
+                                    </button>
+                                </h3>
+                                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+                                    data-bs-parent="#faqsAccordion">
+                                    <div class="accordion-body">
+                                        Our process typically involves initial consultation and requirements gathering,
+                                        conceptual design, detailed engineering (mechanical, electrical, software),
+                                        rapid prototyping, rigorous testing and validation, deployment, and ongoing
+                                        support and maintenance.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h3 class="accordion-header" id="headingThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseThree" aria-expanded="false"
+                                        aria-controls="collapseThree">
+                                        Do you offer post-deployment support and maintenance?
+                                    </button>
+                                </h3>
+                                <div id="collapseThree" class="accordion-collapse collapse"
+                                    aria-labelledby="headingThree" data-bs-parent="#faqsAccordion">
+                                    <div class="accordion-body">
+                                        Yes, we provide comprehensive post-deployment support and maintenance services,
+                                        including troubleshooting, software updates, hardware repairs, and performance
+                                        optimization, to ensure your robotic systems operate flawlessly.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h3 class="accordion-header" id="headingFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#collapseFour" aria-expanded="false"
+                                        aria-controls="collapseFour">
+                                        How long does it take to develop a custom robotics solution?
+                                    </button>
+                                </h3>
+                                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour"
+                                    data-bs-parent="#faqsAccordion">
+                                    <div class="accordion-body">
+                                        The timeline for developing a custom robotics solution varies significantly
+                                        based on complexity, specific requirements, and the scope of the project. A
+                                        basic prototype might take weeks, while a complex industrial system could take
+                                        several months. We provide detailed project timelines after the initial
+                                        consultation.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <a href="index.html#contact" class="floating-contact-btn" aria-label="Contact Support">
+        <i class="fas fa-headset" aria-hidden="true"></i>
+    </a>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-5 mb-md-0">
+                    <h5>InnovateTech</h5>
+                    <p>Pioneering innovation for a smarter, more efficient, and connected future across education,
+                        robotics, AI, and comprehensive tech solutions.</p>
+                    <div class="social-icons mt-4">
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-2 mb-4 mb-md-0">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="index.html#services">Services</a></li>
+                        <li><a href="index.html#about">About Us</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3 mb-4 mb-md-0">
+                    <h5>Contact Us</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-map-marker-alt me-2" aria-hidden="true"></i> 123 Tech Avenue, Innovation
+                            City, India</li>
+                        <li><i class="fas fa-phone me-2" aria-hidden="true"></i> +91 98765 43210</li>
+                        <li><i class="fas fa-envelope me-2" aria-hidden="true"></i> info@innovatetech.com</li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Stay Updated</h5>
+                    <p>Join our newsletter for the latest tech insights and offers.</p>
+                    <form class="newsletter-form">
+                        <div class="input-group mb-3">
+                            <label for="newsletterEmail" class="visually-hidden">Email address for newsletter</label>
+                            <input type="email" class="form-control" id="newsletterEmail"
+                                placeholder="Your email address" aria-label="Your email address for newsletter signup"
+                                required>
+                            <button class="btn btn-subscribe" type="submit">Subscribe</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="row bottom-bar">
+                <div class="col-12">
+                    <p class="mb-0">&copy; 2025 InnovateTech Solutions. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" defer></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Smooth scrolling for internal anchor links (if any are added)
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    // This prevents smooth scrolling for external links (e.g., to index.html#services)
+                    if (this.hostname === window.location.hostname && this.pathname === window.location.pathname) {
+                        e.preventDefault();
+                        const targetId = this.getAttribute('href');
+                        const targetElement = document.querySelector(targetId);
+                        if (targetElement) {
+                            const navbarHeight = document.querySelector('.navbar').offsetHeight;
+                            const elementPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
+                            const offsetPosition = elementPosition - navbarHeight - 20; // Extra padding
+                            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+                            // Close navbar on mobile after clicking a link
+                            const navbarCollapse = document.getElementById('navbarNav');
+                            if (navbarCollapse && navbarCollapse.classList.contains('show')) {
+                                const bsCollapse = new bootstrap.Collapse(navbarCollapse, { toggle: false });
+                                bsCollapse.hide();
+                            }
+                        }
+                    }
+                });
+            });
+
+            // Newsletter signup alert
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    const emailInput = document.getElementById('newsletterEmail');
+                    if (emailInput.value && emailInput.checkValidity()) {
+                        alert(`Thank you for subscribing, ${emailInput.value}!`);
+                        emailInput.value = '';
+                    } else {
+                        alert('Please enter a valid email address to subscribe.');
+                    }
+                });
+            }
+
+            // Example for Pricing button actions (you'd replace with actual form submissions or redirects)
+            document.querySelectorAll('.pricing-card .btn').forEach(button => {
+                button.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const packageName = this.closest('.pricing-card').querySelector('h3').textContent;
+                    alert(`You clicked '${this.textContent}' for the '${packageName}' package. In a real scenario, this would lead to a contact form or specific checkout process.`);
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - E-commerce</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f2f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden; /* Prevent horizontal scroll due to offcanvas on small screens */
+        }
+
+        /* Sidebar Styling */
+        #sidebar {
+            width: 250px;
+            min-width: 250px;
+            background-color: #343a40;
+            color: #fff;
+            transition: all 0.3s ease-in-out;
+            padding-top: 20px;
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1000;
+            overflow-y: auto;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Collapsed state for sidebar on larger screens */
+        @media (min-width: 769px) {
+            #sidebar.collapsed {
+                margin-left: -250px;
+            }
+        }
+
+        /* Offcanvas for sidebar on smaller screens */
+        @media (max-width: 768px) {
+            #sidebar {
+                margin-left: -250px; /* Hidden by default */
+            }
+            #sidebar.collapsed {
+                margin-left: 0; /* Shown when toggled */
+            }
+            /* Overlay when sidebar is open */
+            body.sidebar-open::before {
+                content: '';
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 999;
+            }
+        }
+
+
+        #sidebar .sidebar-header {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+        }
+
+        #sidebar .sidebar-header h3 {
+            color: #fff;
+            font-weight: 700;
+            margin-bottom: 0;
+        }
+
+        #sidebar ul.components {
+            padding: 20px 0;
+            list-style: none;
+        }
+
+        #sidebar ul li a {
+            padding: 15px 20px;
+            display: block;
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        #sidebar ul li a i {
+            margin-right: 10px;
+            font-size: 1.1rem;
+        }
+
+        #sidebar ul li a:hover {
+            background-color: #495057;
+            color: #fff;
+            border-left: 5px solid #007bff;
+        }
+
+        #sidebar ul li.active > a {
+            background-color: #007bff;
+            color: #fff;
+            border-left: 5px solid #0056b3;
+        }
+
+        /* Content Area */
+        #content {
+            flex-grow: 1;
+            padding: 20px;
+            transition: all 0.3s ease-in-out;
+            margin-left: 250px; /* Initial margin for sidebar */
+        }
+
+        @media (min-width: 769px) {
+            body:not(.sidebar-open) #content.shifted { /* Ensure content shifts when sidebar is collapsed on desktop */
+                margin-left: 0;
+            }
+            body.sidebar-open #content { /* When sidebar is open on desktop, maintain its margin */
+                margin-left: 250px;
+            }
+        }
+        @media (max-width: 768px) {
+            #content {
+                margin-left: 0; /* Always 0 on small screens as sidebar is offcanvas */
+            }
+        }
+
+        /* Top Navbar */
+        .navbar {
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            padding: 15px 20px;
+            margin-bottom: 30px;
+            position: sticky;
+            top: 0;
+            z-index: 999; /* Ensure it stays above content */
+        }
+
+        .navbar .navbar-brand {
+            font-weight: 700;
+            color: #343a40;
+            font-size: 1.5rem;
+        }
+
+        .navbar .btn-sidebar-toggle {
+            color: #343a40;
+            border: none;
+            background: none;
+            font-size: 1.5rem;
+            margin-right: 15px;
+            display: block; /* Always show hamburger, but hide on large screen if needed */
+        }
+
+        @media (min-width: 769px) {
+            /* Hide toggle button on large screens when sidebar is open */
+            body.sidebar-open .navbar .btn-sidebar-toggle {
+                display: none;
+            }
+            /* Show toggle button when sidebar is explicitly collapsed on large screens */
+            body:not(.sidebar-open) .navbar .btn-sidebar-toggle {
+                 display: block;
+            }
+        }
+
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 10px;
+            border: 2px solid #ddd;
+        }
+
+        .notification-icon {
+            font-size: 1.4rem;
+            color: #6c757d;
+            position: relative;
+            margin-right: 20px;
+        }
+
+        .notification-icon .badge {
+            position: absolute;
+            top: -5px;
+            right: -10px;
+            font-size: 0.7rem;
+            padding: 5px 7px;
+            border-radius: 50%;
+        }
+
+        /* Dashboard Widgets */
+        .metric-card {
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+            overflow: hidden;
+            color: #fff;
+            height: 100%; /* Ensure cards are same height in a row */
+            transition: transform 0.2s ease;
+        }
+        .metric-card:hover {
+            transform: translateY(-5px);
+        }
+        .metric-card .card-body {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 25px;
+        }
+        .metric-card .icon-wrapper {
+            font-size: 3rem;
+            opacity: 0.7;
+        }
+        .metric-card .text-content h4 {
+            font-weight: 700;
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+        }
+        .metric-card .text-content p {
+            margin-bottom: 0;
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        /* Table Styling */
+        .data-table {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+            padding: 20px;
+            overflow-x: auto; /* For responsive tables */
+        }
+        .data-table th, .data-table td {
+            vertical-align: middle;
+            white-space: nowrap; /* Prevent wrapping in cells */
+        }
+        .data-table thead th {
+            font-weight: 600;
+            color: #343a40;
+            background-color: #f8f9fa;
+        }
+        .data-table tbody tr:hover {
+            background-color: #f1f7fe;
+        }
+        .status-badge {
+            padding: .35em .65em;
+            border-radius: 50rem;
+            font-size: 0.75em;
+        }
+
+        /* Product Image in Table */
+        .product-thumb {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        /* Form Modal Styling */
+        .modal-content {
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        .modal-header {
+            background-color: #007bff;
+            color: #fff;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            border-bottom: none;
+        }
+        .modal-header .btn-close {
+            filter: invert(1); /* White close button */
+        }
+        .form-label {
+            font-weight: 500;
+        }
+        .btn-primary, .btn-success, .btn-info, .btn-danger {
+            border-radius: 50px;
+            padding: 10px 25px;
+            font-weight: 600;
+            transition: all 0.2s ease-in-out;
+        }
+        .btn-primary:hover, .btn-success:hover, .btn-info:hover, .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <nav id="sidebar">
+        <div class="sidebar-header">
+            <h3><i class="fas fa-gem me-2"></i> Admin Panel</h3>
+        </div>
+        <ul class="list-unstyled components">
+            <li class="active" data-section="dashboard">
+                <a href="#dashboardSection"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+            </li>
+            <li data-section="products">
+                <a href="#productsSection"><i class="fas fa-box"></i> Products</a>
+            </li>
+            <li data-section="orders">
+                <a href="#ordersSection"><i class="fas fa-receipt"></i> Orders</a>
+            </li>
+            <li data-section="customers">
+                <a href="#customersSection"><i class="fas fa-users"></i> Customers</a>
+            </li>
+            <li data-section="reports">
+                <a href="#reportsSection"><i class="fas fa-chart-line"></i> Reports</a>
+            </li>
+            <li data-section="settings">
+                <a href="#settingsSection"><i class="fas fa-cog"></i> Settings</a>
+            </li>
+            <li>
+                <a href="#"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <nav class="navbar navbar-expand-lg">
+            <div class="container-fluid">
+                <button type="button" id="sidebarCollapse" class="btn btn-sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <a class="navbar-brand d-block d-md-none" href="#">Admin</a> <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav ms-auto align-items-center">
+                        <li class="nav-item">
+                            <a class="nav-link notification-icon" href="#">
+                                <i class="fas fa-bell"></i>
+                                <span class="badge bg-danger">3</span>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <img src="https://picsum.photos/40/40?random=1" alt="User Avatar" class="user-avatar">
+                                <span class="d-none d-lg-inline me-2">Admin User</span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-user-circle me-2"></i> Profile</a></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-cogs me-2"></i> Settings</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item" href="#"><i class="fas fa-sign-out-alt me-2"></i> Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+
+        <main>
+            <section id="dashboardSection" class="mb-5 active-section">
+                <h2 class="mb-4 text-primary">Dashboard Overview</h2>
+                <div class="row g-4 mb-5">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card metric-card text-white bg-primary">
+                            <div class="card-body">
+                                <div class="text-content">
+                                    <h4>₹5,000,000</h4>
+                                    <p>Total Sales</p>
+                                </div>
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card metric-card text-white bg-success">
+                            <div class="card-body">
+                                <div class="text-content">
+                                    <h4>125</h4>
+                                    <p>Orders Today</p>
+                                </div>
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-clipboard-list"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card metric-card text-white bg-warning">
+                            <div class="card-body">
+                                <div class="text-content">
+                                    <h4>87</h4>
+                                    <p>Active Users</p>
+                                </div>
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card metric-card text-white bg-danger">
+                            <div class="card-body">
+                                <div class="text-content">
+                                    <h4>2,345</h4>
+                                    <p>Products in Stock</p>
+                                </div>
+                                <div class="icon-wrapper">
+                                    <i class="fas fa-boxes"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="mb-4 text-primary">Recent Orders</h3>
+                <div class="data-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Order ID</th>
+                                <th scope="col">Customer</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Status</th>
+                                <th scope="col">Total</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#ORD001</td>
+                                <td>Amit Sharma</td>
+                                <td>2025-06-05</td>
+                                <td><span class="badge bg-success status-badge">Delivered</span></td>
+                                <td>₹12,500</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm me-1"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD002</td>
+                                <td>Priya Singh</td>
+                                <td>2025-06-04</td>
+                                <td><span class="badge bg-warning text-dark status-badge">Processing</span></td>
+                                <td>₹4,999</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm me-1"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD003</td>
+                                <td>Rahul Kumar</td>
+                                <td>2025-06-03</td>
+                                <td><span class="badge bg-danger status-badge">Cancelled</span></td>
+                                <td>₹2,100</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm me-1"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD004</td>
+                                <td>Deepika Reddy</td>
+                                <td>2025-06-02</td>
+                                <td><span class="badge bg-info text-dark status-badge">Shipped</span></td>
+                                <td>₹8,750</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm me-1"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>#ORD005</td>
+                                <td>Mohit Sharma</td>
+                                <td>2025-06-01</td>
+                                <td><span class="badge bg-success status-badge">Delivered</span></td>
+                                <td>₹1,500</td>
+                                <td>
+                                    <button class="btn btn-info btn-sm me-1"><i class="fas fa-eye"></i></button>
+                                    <button class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <nav class="mt-3">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+
+            <section id="productsSection" class="mb-5 d-none">
+                <h2 class="mb-4 text-primary">Product Management</h2>
+                <div class="d-flex justify-content-end mb-3">
+                    <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#productModal"><i class="fas fa-plus-circle me-2"></i> Add New Product</button>
+                </div>
+                <div class="data-table">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Image</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Category</th>
+                                <th scope="col">Price</th>
+                                <th scope="col">Stock</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><img src="https://picsum.photos/50/50?random=52" class="product-thumb" alt="Product"></td>
+                                <td>Noise-Cancelling Headphones</td>
+                                <td>Electronics</td>
+                                <td>₹7,999</td>
+                                <td>150</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#productModal"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://picsum.photos/50/50?random=53" class="product-thumb" alt="Product"></td>
+                                <td>Ergonomic Office Chair</td>
+                                <td>Home & Office</td>
+                                <td>₹12,500</td>
+                                <td>75</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#productModal"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><img src="https://picsum.photos/50/50?random=54" class="product-thumb" alt="Product"></td>
+                                <td>Smartwatch Pro</td>
+                                <td>Wearables</td>
+                                <td>₹15,000</td>
+                                <td>200</td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#productModal"><i class="fas fa-edit"></i></button>
+                                    <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <nav class="mt-3">
+                        <ul class="pagination justify-content-center">
+                            <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                        </ul>
+                    </nav>
+                </div>
+            </section>
+
+            <section id="ordersSection" class="mb-5 d-none">
+                <h2 class="mb-4 text-primary">Orders List</h2>
+                <div class="data-table p-5 text-center text-muted">
+                    <i class="fas fa-info-circle fa-3x mb-3"></i>
+                    <p>Orders management features will be added here.</p>
+                </div>
+            </section>
+
+            <section id="customersSection" class="mb-5 d-none">
+                <h2 class="mb-4 text-primary">Customer Management</h2>
+                <div class="data-table p-5 text-center text-muted">
+                    <i class="fas fa-info-circle fa-3x mb-3"></i>
+                    <p>Customer management features will be added here.</p>
+                </div>
+            </section>
+
+            <section id="reportsSection" class="mb-5 d-none">
+                <h2 class="mb-4 text-primary">Sales Reports</h2>
+                <div class="data-table p-5 text-center text-muted">
+                    <i class="fas fa-info-circle fa-3x mb-3"></i>
+                    <p>Detailed sales and performance reports will be displayed here.</p>
+                </div>
+            </section>
+
+            <section id="settingsSection" class="mb-5 d-none">
+                <h2 class="mb-4 text-primary">Settings</h2>
+                <div class="data-table p-5 text-center text-muted">
+                    <i class="fas fa-info-circle fa-3x mb-3"></i>
+                    <p>Admin panel configuration and settings will be available here.</p>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <div class="modal fade" id="productModal" tabindex="-1" aria-labelledby="productModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="productModalLabel">Add New Product</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="productForm">
+                        <div class="mb-3">
+                            <label for="productName" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="productName" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productCategory" class="form-label">Category</label>
+                            <input type="text" class="form-control" id="productCategory" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productPrice" class="form-label">Price (₹)</label>
+                            <input type="number" class="form-control" id="productPrice" step="0.01" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productStock" class="form-label">Stock Quantity</label>
+                            <input type="number" class="form-control" id="productStock" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="productImage" class="form-label">Product Image URL</label>
+                            <input type="url" class="form-control" id="productImage" placeholder="https://picsum.photos/200/200" required>
+                        </div>
+                        <div class="d-grid gap-2 mt-4">
+                            <button type="submit" class="btn btn-success"><i class="fas fa-save me-2"></i> Save Product</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const sidebar = document.getElementById('sidebar');
+            const content = document.getElementById('content');
+            const sidebarCollapse = document.getElementById('sidebarCollapse');
+            const sidebarLinks = document.querySelectorAll('#sidebar ul li');
+            const sections = document.querySelectorAll('main section');
+
+            // Toggle sidebar functionality
+            sidebarCollapse.addEventListener('click', function() {
+                // Toggle 'collapsed' class on sidebar for animation
+                sidebar.classList.toggle('collapsed');
+
+                // Toggle 'shifted' class on content to adjust margin for desktop
+                content.classList.toggle('shifted');
+
+                // For small screens, add/remove a class on body to control overlay
+                if (window.innerWidth <= 768) {
+                    document.body.classList.toggle('sidebar-open');
+                } else {
+                    // On desktop, toggle 'sidebar-open' class on body to control margin and button visibility
+                    document.body.classList.toggle('sidebar-open');
+                }
+            });
+
+            // Handle sidebar navigation clicks
+            sidebarLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+
+                    // Remove 'active' from all links and add to clicked one
+                    sidebarLinks.forEach(item => item.classList.remove('active'));
+                    this.classList.add('active');
+
+                    // Hide all sections and show the target section
+                    const targetSectionId = this.dataset.section + 'Section';
+                    sections.forEach(section => {
+                        section.classList.add('d-none');
+                        section.classList.remove('active-section');
+                    });
+                    document.getElementById(targetSectionId).classList.remove('d-none');
+                    document.getElementById(targetSectionId).classList.add('active-section');
+
+                    // On small screens, collapse sidebar and remove overlay after selection
+                    if (window.innerWidth <= 768) {
+                        sidebar.classList.remove('collapsed'); // This means it was open and now we close it
+                        document.body.classList.remove('sidebar-open');
+                    }
+                    // On desktop, if sidebar was collapsed and a link is clicked, open it
+                    else if (sidebar.classList.contains('collapsed')) {
+                        sidebar.classList.remove('collapsed');
+                        content.classList.remove('shifted');
+                        document.body.classList.add('sidebar-open'); // Keep it open if a link inside was clicked
+                    }
+                });
+            });
+
+            // Product Modal form submission (simple example)
+            const productForm = document.getElementById('productForm');
+            productForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent default form submission
+
+                // Basic form validation (Bootstrap's built-in validation is more robust)
+                const productName = document.getElementById('productName').value;
+                const productPrice = document.getElementById('productPrice').value;
+
+                if (productName && productPrice) {
+                    alert('Product saved: ' + productName);
+                    const productModal = bootstrap.Modal.getInstance(document.getElementById('productModal'));
+                    productModal.hide(); // Hide the modal
+                    productForm.reset(); // Clear form
+                } else {
+                    alert('Please fill in all required fields.');
+                }
+            });
+
+            // Initial state for responsive design on page load
+            function adjustLayout() {
+                if (window.innerWidth <= 768) {
+                    // sidebar.classList.add('collapsed'); // Hide sidebar by default on small screens
+                    content.classList.remove('shifted'); // Content never shifts on small screens
+                    document.body.classList.remove('sidebar-open'); // Ensure no overlay initially
+                } else {
+                    sidebar.classList.remove('collapsed'); // Show sidebar by default on large screens
+                    content.classList.add('shifted'); // Content shifts on large screens
+                    document.body.classList.add('sidebar-open'); // Indicate sidebar is open on desktop
+                }
+            }
+
+            adjustLayout(); // Call on page load
+            window.addEventListener('resize', adjustLayout); // Call on window resize
+        });
+    </script>
+</body>
+</html>
