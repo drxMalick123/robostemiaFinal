@@ -5,3 +5,4 @@ django-admin-sortable2
 requests
 psycopg2-binary  # Only if you're using PostgreSQL (Render default)
 Pillow
+whitenoise>=6.0
