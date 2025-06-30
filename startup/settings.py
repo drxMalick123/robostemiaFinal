@@ -26,8 +26,17 @@ SECRET_KEY = 'django-insecure-=jxwyxxtjai7v6cu)1w2l!9^xx(&#6ph%%9q=z1!$#!o9ncc71
 DEBUG = True
 
 # ALLOWED_HOSTS = ['*']
+CSRF_TRUSTED_ORIGINS = [
+    "https://www.robostemia.com"
+]
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','robostemia.com']
+ALLOWED_HOSTS = [
+    "robostemia.com",
+    "www.robostemia.com",
+    "robostemia.onrender.com",  # Optional, for Render default domain
+    "localhost",                # Optional, for local dev
+    "127.0.0.1"
+]
 
 # Application definition
 
