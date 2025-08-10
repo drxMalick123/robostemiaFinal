@@ -372,6 +372,19 @@ learning.{% endblock %}
   60% {transform: translateY(-3px);}
 }
 </style>
+<!-- Small Splash Popup -->
+<div id="miniSplash" 
+     style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:white;border-radius:10px;box-shadow:0 4px 12px rgba(0,0,0,0.3);padding:20px;width:300px;max-width:90%;z-index:10000;text-align:center;font-family:sans-serif;">
+  
+  <!-- Close Button -->
+  <span onclick="document.getElementById('miniSplash').style.display='none'" 
+        style="position:absolute;top:8px;right:12px;font-size:20px;cursor:pointer;color:#888;">&times;</span>
+  
+  <!-- Content -->
+  <h3 style="margin-top:10px;color:#25D366;">Special Offer!</h3>
+  <p style="color:#555;">Get 20% off today only. Click below to learn more.</p>
+  <a href="#" style="display:inline-block;margin-top:10px;padding:10px 20px;background:linear-gradient(135deg,#25D366,#0d6efd);color:white;border-radius:5px;text-decoration:none;">Claim Offer</a>
+</div>
 
 <!-- Bootstrap Icons -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
