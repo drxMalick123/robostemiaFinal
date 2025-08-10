@@ -121,83 +121,83 @@
     <!-- Skip link for accessibility -->
     <a href="#main-content" class="visually-hidden-focusable">Skip to content</a>
     
-    <!-- Navigation -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-        <div class="container d-flex align-items-center justify-content-between">
-            <a class="navbar-brand" href="/">
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <div class="container d-flex align-items-center justify-content-between">
+        
+        <!-- Brand (Left) -->
+        <a class="navbar-brand" href="/">
             <img src="{% static '/robot/logof.png' %}" alt="RoboSTEMia Logo">
-            </a>
-         <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"
-        style="margin-left:auto;">
-    <span class="navbar-toggler-icon"></span>
-</button>
+        </a>
 
-            <div class="con collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <!-- Nav links -->
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/' %}active-page{% endif %}" href="/">Home{% if request.path == '/' %} :{% endif %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/shop/' %}active-page{% endif %}" href="/shop/">Shop{% if request.path == '/shop/' %} :{% endif %}</a>
-                    </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/services/' %}active-page{% endif %}" href="/services/">Services{% if request.path == '/services/' %} :{% endif %}</a>
-                    </li> -->
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/advisorycommittee/' %}active-page{% endif %}" href="/advisorycommittee/">Committee-Members{% if request.path == '/advisorycommittee/' %} :{% endif %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/order-tracking/' %}active-page{% endif %}" href="/order-tracking/">Order-Track{% if request.path == '/order-tracking/' %} :{% endif %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/about/' %}active-page{% endif %}" href="/about/">About{% if request.path == '/about/' %} :{% endif %}</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/contact/' %}active-page{% endif %}" href="/contact/">Contact{% if request.path == '/contact/' %} :{% endif %}</a>
-                    </li>
-                    {% if user.is_authenticated %}
-                    <li class="nav-item">
-                        <a class="nav-link {% if request.path == '/your-cart/' %}active-page{% endif %}" href="/your-cart/">
+        <!-- Menu Links -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/' %}active-page{% endif %}" href="/">Home{% if request.path == '/' %} :{% endif %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/shop/' %}active-page{% endif %}" href="/shop/">Shop{% if request.path == '/shop/' %} :{% endif %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/advisorycommittee/' %}active-page{% endif %}" href="/advisorycommittee/">Committee-Members{% if request.path == '/advisorycommittee/' %} :{% endif %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/order-tracking/' %}active-page{% endif %}" href="/order-tracking/">Order-Track{% if request.path == '/order-tracking/' %} :{% endif %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/about/' %}active-page{% endif %}" href="/about/">About{% if request.path == '/about/' %} :{% endif %}</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/contact/' %}active-page{% endif %}" href="/contact/">Contact{% if request.path == '/contact/' %} :{% endif %}</a>
+                </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.path == '/your-cart/' %}active-page{% endif %}" href="/your-cart/">
                         <i class="fas fa-shopping-cart"></i> Cart{% if request.path == '/your-cart/' %} :{% endif %}
                         <span class="badge bg-primary ms-1" id="cartCount">0</span>
-                        </a>
-                    </li>
-                    {% endif %}
-                    <!-- User authentication section -->
-                    {% if user.is_authenticated %}
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    </a>
+                </li>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa-solid fa-user me-2" style="color: #0011ff;"></i>
                         <span style="color: #002966;">{{ user.username }}</span>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                            <li><a class="dropdown-item" href="#">Profile</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                        </ul>
-                    </li>
-                    {% else %}
-                    <li class="nav-item">
-                        <a class="nav-link d-flex align-items-center" href="{% url 'login' %}">
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="{% url 'login' %}">
                         <i class="fa-solid fa-user me-2" style="color: #0011ff;"></i>
                         <span class="text-blue">Login</span>
-                        </a>
-                    </li>
-                    <li class="nav-item"></li>
-                    <a class="nav-link d-flex align-items-center" href="{% url 'register' %}">
-                    <i class="fa-solid fa-user me-2" style="color: #db892b;"></i>
-                    <span class="text-blue">Register</span>
                     </a>
-                    </li>
-                    {% endif %}
-                </ul>
-            </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center" href="{% url 'register' %}">
+                        <i class="fa-solid fa-user me-2" style="color: #db892b;"></i>
+                        <span class="text-blue">Register</span>
+                    </a>
+                </li>
+                {% endif %}
+            </ul>
         </div>
-    </nav>
+
+        <!-- Toggle (Right) -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" 
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+    </div>
+</nav>
 
     <!-- Main Content -->
     <main id="main-content">
